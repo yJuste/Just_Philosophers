@@ -21,6 +21,9 @@
 // thread
 # include <pthread.h>
 
+// gettimeofday
+#include <sys/time.h>
+
 // Structures
 
 typedef struct pthread_mutex_t	t_mtx;

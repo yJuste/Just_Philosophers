@@ -46,4 +46,7 @@ help:
 norm:
 	@norminette $(NORMINETTE)
 
+sign:
+	@codesign --entitlements entitlements.plist --sign - $(NAME)
+
 .PHONY: all clean fclean re rf s help norm
