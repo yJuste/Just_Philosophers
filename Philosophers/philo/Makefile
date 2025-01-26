@@ -4,7 +4,8 @@ CC = cc
 CFLAGS = -g # -Wall -Wextra -Werror
 
 SRC =	ft_philosophers.c	\
-	ft_utils.c
+	ft_utils.c		\
+	ft_lib.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -19,7 +20,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ)
-	@echo $(GREEN)"--- EXECUTABLE ./$(NAME) is ready ---"$(RESET)
+	@echo $(GREEN)"--- EXECUTABLE ./$(NAME) is ready ---`make help`"$(RESET)
 
 clean:
 	rm -f $(OBJ)
@@ -40,7 +41,7 @@ s:
 
 help:
 	@echo $(GREEN)
-	@head -n 12 ft_philosophers.h
+	@head -n 11 ft_philosophers.h
 	@echo $(RESET)
 
 norm:
