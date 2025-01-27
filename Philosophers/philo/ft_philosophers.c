@@ -21,10 +21,8 @@ int	main(int argc, const char **argv)
 {
 	t_table		*table;
 
-	table = ft_init();
+	ft_init(&table);
 	ft_create_philosophers(table);
 	ft_end_simulation(table);
-	free(table->philo);
-	free(table);
 	return (0);
 }

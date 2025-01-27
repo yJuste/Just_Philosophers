@@ -40,6 +40,7 @@ typedef struct s_table
 	int			max_meals;
 	int			a;
 	t_philo		*philo;
+	t_fork		*fork;
 	t_mtx		info;
 }	t_table;
 
@@ -52,6 +53,8 @@ typedef struct s_philo
 
 typedef struct s_fork
 {
+	t_mtx		left;
+	t_mtx		right;
 }	t_fork;
 
 //	---------- MY CODE ----------
@@ -66,7 +69,8 @@ void		ft_end_simulation(t_table *table);
 
 // ft_parsing.c
 
-t_table		*ft_init(void);
+void		ft_init(t_table **table);
+void		ft_parse(t_table *table);
 
 // ft_utils.c
 

@@ -22,12 +22,6 @@ void	ft_create_philosophers(t_table *table)
 	int			i;
 
 	i = 0;
-	table->nb_philo = 5;
-	table->time_to_die = 500;
-	table->time_to_eat = 500;
-	table->time_to_sleep = 500;
-	table->philo = ft_calloc(table->nb_philo, sizeof(t_philo));
-	table->philo->id = 1;
 	while (i < table->nb_philo)
 	{
 		table->philo[i].table = table;
@@ -61,4 +55,9 @@ void	ft_end_simulation(t_table *table)
 		i++;
 	}
 	pthread_mutex_destroy(&table->info);
+	pthread_mutex_destroy(&table->fork->left);
+	pthread_mutex_destroy(&table->fork->right);
+	free(table->philo);
+	free(table->fork);
+	free(table);
 }
