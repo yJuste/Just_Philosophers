@@ -4,6 +4,8 @@ CC = cc
 CFLAGS = -g # -Wall -Wextra -Werror
 
 SRC =	ft_philosophers.c	\
+	ft_philosophers_2.c	\
+	ft_parsing.c		\
 	ft_utils.c		\
 	ft_lib.c
 

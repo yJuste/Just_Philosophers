@@ -26,7 +26,7 @@
 
 // Structures
 
-typedef struct pthread_mutex_t	t_mtx;
+typedef pthread_mutex_t	t_mtx;
 typedef struct s_table		t_table;
 typedef struct s_philo		t_philo;
 typedef struct s_fork		t_fork;
@@ -37,14 +37,17 @@ typedef struct s_table
 	int			time_to_die;
 	int			time_to_eat;
 	int			time_to_sleep;
-	int			meals_taken;
+	int			max_meals;
+	int			a;
 	t_philo		*philo;
+	t_mtx		info;
 }	t_table;
 
 typedef struct s_philo
 {
 	int			id;
 	pthread_t	id_thread;
+	t_table		*table;
 }	t_philo;
 
 typedef struct s_fork
@@ -55,6 +58,16 @@ typedef struct s_fork
 
 // ft_philosophers.c
 
+// ft_philosophers_2.c
+
+void		ft_create_philosophers(t_table *table);
+void		*ft_routine(void *data);
+void		ft_end_simulation(t_table *table);
+
+// ft_parsing.c
+
+t_table		*ft_init(void);
+
 // ft_utils.c
 
 void		ft_error(t_table *table, int error);
@@ -62,5 +75,6 @@ void		ft_error(t_table *table, int error);
 // ft_lib.c
 
 void		*ft_calloc(size_t count, size_t size);
+int			ft_atoi(const char *str);
 
 # endif
