@@ -17,6 +17,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <errno.h>
 
 // thread
 # include <pthread.h>
@@ -48,13 +49,15 @@ typedef struct s_philo
 {
 	int			id;
 	pthread_t	id_thread;
+	t_fork		*left;
+	t_fork		*right;
 	t_table		*table;
 }	t_philo;
 
 typedef struct s_fork
 {
-	t_mtx		left;
-	t_mtx		right;
+	int			id;
+	t_mtx		fork;
 }	t_fork;
 
 //	---------- MY CODE ----------
@@ -71,6 +74,7 @@ void		ft_end_simulation(t_table *table);
 
 void		ft_init(t_table **table);
 void		ft_parse(t_table *table);
+void		ft_create_forks(t_table *table);
 
 // ft_utils.c
 

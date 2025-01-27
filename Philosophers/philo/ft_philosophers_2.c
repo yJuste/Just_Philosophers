@@ -19,7 +19,7 @@ void		ft_end_simulation(t_table *table);
 
 void	ft_create_philosophers(t_table *table)
 {
-	int			i;
+	int		i;
 
 	i = 0;
 	while (i < table->nb_philo)
@@ -48,15 +48,13 @@ void	ft_end_simulation(t_table *table)
 {
 	int		i;
 
-	i = 0;
-	while (i < table->nb_philo)
-	{
+	i = -1;
+	while (++i < table->nb_philo)
 		pthread_join(table->philo[i].id_thread, NULL);
-		i++;
-	}
+	i = -1;
+	while (++i < table->nb_philo)
+		pthread_mutex_destroy(&table->fork[i].fork);
 	pthread_mutex_destroy(&table->info);
-	pthread_mutex_destroy(&table->fork->left);
-	pthread_mutex_destroy(&table->fork->right);
 	free(table->philo);
 	free(table->fork);
 	free(table);
