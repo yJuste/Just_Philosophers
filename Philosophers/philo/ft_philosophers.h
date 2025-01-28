@@ -23,11 +23,11 @@
 # include <pthread.h>
 
 // gettimeofday
-#include <sys/time.h>
+# include <sys/time.h>
 
 // Structures
 
-typedef pthread_mutex_t	t_mtx;
+typedef pthread_mutex_t		t_mtx;
 typedef struct s_table		t_table;
 typedef struct s_philo		t_philo;
 typedef struct s_fork		t_fork;
@@ -40,17 +40,19 @@ typedef struct s_table
 	int			time_to_sleep;
 	int			max_meals;
 	int			a;
+	int			start;
 	t_philo		*philo;
 	t_fork		*fork;
 	t_mtx		info;
+	t_mtx		info_a;
 }	t_table;
 
 typedef struct s_philo
 {
 	int			id;
 	pthread_t	id_thread;
-	t_fork		*left;
-	t_fork		*right;
+	t_fork		*left_fork;
+	t_fork		*right_fork;
 	t_table		*table;
 }	t_philo;
 
@@ -62,13 +64,18 @@ typedef struct s_fork
 
 //	---------- MY CODE ----------
 
+// main.c
+
+int			main(int argc, const char **argv);
+
 // ft_philosophers.c
 
-// ft_philosophers_2.c
-
 void		ft_create_philosophers(t_table *table);
+void		ft_init_philosophers(t_table *table, t_philo *philo, int id);
 void		*ft_routine(void *data);
 void		ft_end_simulation(t_table *table);
+
+// ft_philosophers_2.c
 
 // ft_parsing.c
 
@@ -85,4 +92,4 @@ void		ft_error(t_table *table, int error);
 void		*ft_calloc(size_t count, size_t size);
 int			ft_atoi(const char *str);
 
-# endif
+#endif

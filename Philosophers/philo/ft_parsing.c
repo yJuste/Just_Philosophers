@@ -25,6 +25,7 @@ void	ft_init(t_table **table)
 	(*table)->philo = ft_calloc((*table)->nb_philo, sizeof(t_philo));
 	(*table)->philo->id = 1;
 	pthread_mutex_init(&(*table)->info, NULL);
+	pthread_mutex_init(&(*table)->info_a, NULL);
 	ft_create_forks(*table);
 }
 
@@ -42,8 +43,5 @@ void	ft_create_forks(t_table *table)
 
 	i = 0;
 	while (i < table->nb_philo)
-	{
-		pthread_mutex_init(&table->fork[i].fork, NULL);
-		i++;
-	}
+		pthread_mutex_init(&table->fork[i++].fork, NULL);
 }
