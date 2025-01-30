@@ -11,42 +11,38 @@
 /* ************************************************************************** */
 #include "ft_philosophers.h"
 
-// -----------------------PROTOTYPE--------------------
-void		ft_create_philosophers(t_table *table);
-void		ft_end_simulation(t_table *table);
-// ----------------------------------------------------
+// -----------------------PROTOTYPE-------------------------
+void		ft_init(t_table **table);
+void		ft_parse(t_table *table);
+void		ft_create_forks(t_table *table);
+// ---------------------------------------------------------
 
-void	ft_create_philosophers(t_table *table)
+void	ft_init(t_table **table)
 {
-	int		i;
-
-	if (!table->max_meals)
-		return ;
-	if (table->nb_philo == 1)
-		return ;
-	else
-	{
-		i = 0;
-		while (i < table->nb_philo)
-		{
-			pthread_create(&table->philo[i].id_thread,
-				NULL, ft_routine, &table->philo[i]);
-			i++;
-		}
-		table->start_simulation = ft_gettimeofday();
-		pthread_mutex_lock(&table->info);
-		table->wait_start = 1;
-		pthread_mutex_unlock(&table->info);
-	}
+	(*table) = ft_calloc(1, sizeof(t_table));
+	ft_parse(*table);
+	(*table)->fork = ft_calloc((*table)->nb_philo, sizeof(t_fork));
+	(*table)->philo = ft_calloc((*table)->nb_philo, sizeof(t_philo));
+	(*table)->philo->id = 1;
+	pthread_mutex_init(&(*table)->info, NULL);
+	pthread_mutex_init(&(*table)->info_a, NULL);
+	ft_create_forks(*table);
 }
 
-void	ft_end_simulation(t_table *table)
+void	ft_parse(t_table *table)
+{
+	table->nb_philo = 5;
+	table->time_to_die = 500;
+	table->time_to_eat = 500;
+	table->time_to_sleep = 500;
+	table->max_meals = -1;
+}
+
+void	ft_create_forks(t_table *table)
 {
 	int		i;
 
 	i = 0;
-	if (!table->end_simulation)
-		while (i < table->nb_philo)
-			pthread_join(table->philo[i++].id_thread, NULL);
-	ft_free(table);
+	while (i < table->nb_philo)
+		pthread_mutex_init(&table->fork[i++].fork, NULL);
 }
