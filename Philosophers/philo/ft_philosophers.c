@@ -24,20 +24,18 @@ void	ft_create_philosophers(t_table *table)
 		return ;
 	if (table->nb_philo == 1)
 		return ;
-	else
+	i = 0;
+	while (i < table->nb_philo)
 	{
-		i = 0;
-		while (i < table->nb_philo)
-		{
-			pthread_create(&table->philo[i].id_thread,
-				NULL, ft_routine, &table->philo[i]);
-			i++;
-		}
-		table->start_simulation = ft_gettimeofday();
-		pthread_mutex_lock(&table->info);
-		table->wait_start = 1;
-		pthread_mutex_unlock(&table->info);
+		pthread_create(&table->philo[i].id_thread,
+			NULL, ft_routine, &table->philo[i]);
+		i++;
 	}
+	pthread_create(&table->monitor, NULL, ft_monitor, table);
+	table->start_simulation = ft_gettimeofday();
+	pthread_mutex_lock(&table->info);
+	table->wait_start = 1;
+	pthread_mutex_unlock(&table->info);
 }
 
 void	ft_end_simulation(t_table *table)

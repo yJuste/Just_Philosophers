@@ -46,6 +46,8 @@ typedef struct s_table
 	long		start_simulation;
 	int			end_simulation;
 	int			wait_start;
+	int			wait_monitor;
+	pthread_t	monitor;
 	t_mtx		info;
 	t_mtx		write;
 	t_fork		*fork;
@@ -97,6 +99,7 @@ void		ft_end_simulation(t_table *table);
 // ft_philosophers_2.c
 
 void		*ft_routine(void *data);
+void		*ft_monitor(void *data);
 void		ft_eat(t_table *table, t_philo *philo);
 void		ft_sleep(t_table *table, t_philo *philo);
 void		ft_think(t_table *table, t_philo *philo);
@@ -106,6 +109,7 @@ void		ft_think(t_table *table, t_philo *philo);
 // ft_write.c
 
 void		ft_write_status(t_philo *philo, t_actions action);
+void		ft_write_statusd(t_philo *philo, t_actions action);
 
 // ft_parsing.c
 
@@ -122,7 +126,7 @@ void		ft_free(t_table *table);
 
 // ft_utils_2.c
 
-void		ft_wait_philosophers(t_table *table);
+void		ft_wait_philosophers(t_table *table, int *wait);
 int			ft_wait(t_mtx *mutex, int *wait);
 int			ft_simulation_finished(t_table *table);
 

@@ -13,6 +13,7 @@
 
 // ----------------------PROTOTYPE-----------------------
 void		*ft_routine(void *data);
+void		*ft_monitor(void *data);
 void		ft_eat(t_table *table, t_philo *philo);
 void		ft_sleep(t_table *table, t_philo *philo);
 void		ft_think(t_table *table, t_philo *philo);
@@ -25,7 +26,7 @@ void	*ft_routine(void *data)
 
 	philo = (t_philo *)data;
 	table = philo->table;
-	ft_wait_philosophers(table);
+	ft_wait_philosophers(table, &table->wait_start);
 	while (!ft_simulation_finished(table))
 	{
 		if (philo->full)
@@ -37,17 +38,26 @@ void	*ft_routine(void *data)
 	return (NULL);
 }
 
+void	*ft_monitor(void *data)
+{
+	t_table		*table;
+
+	table = (t_table *)data;
+	ft_wait_philosophers(table, &table->wait_monitor);
+	return (NULL);
+}
+
 void	ft_eat(t_table *table, t_philo *philo)
 {
 	pthread_mutex_lock(&philo->left_fork->fork);
-	ft_write_status(philo, LEFT_FORK);
+	ft_write_statusd(philo, LEFT_FORK);
 	pthread_mutex_lock(&philo->right_fork->fork);
-	ft_write_status(philo, RIGHT_FORK);
+	ft_write_statusd(philo, RIGHT_FORK);
 	pthread_mutex_lock(&philo->mutex);
 	philo->last_meal = ft_gettimeofday();
 	pthread_mutex_unlock(&philo->mutex);
 	philo->meals_taken++;
-	ft_write_status(philo, EAT);
+	ft_write_statusd(philo, EAT);
 	ft_usleep(table->time_to_eat, table);
 	if (table->max_meals > 0 && philo->meals_taken == table->max_meals)
 	{

@@ -37,10 +37,10 @@ void	ft_init(t_table **table)
 
 void	ft_parse(t_table *table)
 {
-	table->nb_philo = 2;
-	table->time_to_die = 100;
-	table->time_to_eat = 100;
-	table->time_to_sleep = 100;
+	table->nb_philo = 5;
+	table->time_to_die = 510;
+	table->time_to_eat = 200;
+	table->time_to_sleep = 200;
 	table->max_meals = -1;
 	table->wait_start = 0;
 }
@@ -64,7 +64,7 @@ void	ft_init_philosophers(t_table *table)
 	i = 0;
 	while (i < table->nb_philo)
 	{
-		philo = table->philo + i;
+		philo = &table->philo[i];
 		philo->id = i + 1;
 		philo->full = 0;
 		philo->meals_taken = 0;
