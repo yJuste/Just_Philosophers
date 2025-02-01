@@ -14,6 +14,7 @@
 // -------------------------PROTOTYPE--------------------------
 void		ft_wait_philosophers(t_table *table, int *wait);
 int			ft_wait(t_mtx *mutex, int *wait);
+int			ft_is_died(t_philo *philo);
 int			ft_simulation_finished(t_table *table);
 // ------------------------------------------------------------
 
@@ -33,6 +34,20 @@ int	ft_wait(t_mtx *mutex, int *wait)
 	res = *wait;
 	pthread_mutex_unlock(mutex);
 	return (res);
+}
+
+int	ft_is_died(t_philo *philo)
+{
+	long		elapsed;
+	long		last_meal;
+
+	pthread_mutex_lock(&philo->mutex);
+	last_meal = philo->last_meal;
+	pthread_mutex_unlock(&philo->mutex);
+	elapsed = ft_gettimeofday() - last_meal;
+	if (elapsed > philo->table->time_to_die)
+		return (1);
+	return (0);
 }
 
 int	ft_simulation_finished(t_table *table)

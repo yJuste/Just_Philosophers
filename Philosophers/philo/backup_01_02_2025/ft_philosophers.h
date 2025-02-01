@@ -12,7 +12,7 @@
 #ifndef FT_PHILOSOPHERS_H
 # define FT_PHILOSOPHERS_H
 
-// Standard Librairies
+// Standard Libraries
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -24,6 +24,10 @@
 
 // gettimeofday
 # include <sys/time.h>
+
+// Errors
+
+// 255: error of gettimeofday
 
 // Structures
 
@@ -39,9 +43,9 @@ typedef struct s_table
 	int			time_to_eat;
 	int			time_to_sleep;
 	int			max_meals;
-	int			wait_start;
 	long		start_simulation;
-	long		end_simulation;
+	int			end_simulation;
+	int			wait_start;
 	pthread_t	monitor;
 	t_mtx		info;
 	t_mtx		write;
@@ -53,7 +57,10 @@ typedef struct s_philo
 {
 	int			id;
 	pthread_t	id_thread;
-	t_mtx		mtx;
+	long		last_meal;
+	int			meals_taken;
+	int			full;
+	t_mtx		mutex;
 	t_fork		*left_fork;
 	t_fork		*right_fork;
 	t_table		*table;
@@ -80,5 +87,53 @@ typedef enum e_actions
 //	---------- MY CODE ----------
 
 // main.c
+
+int			main(int argc, const char **argv);
+
+// ft_philosophers.c
+
+void		ft_create_philosophers(t_table *table);
+void		ft_end_simulation(t_table *table);
+
+// ft_philosophers_2.c
+
+void		*ft_routine(void *data);
+void		*ft_monitor(void *data);
+void		ft_eat(t_table *table, t_philo *philo);
+void		ft_sleep(t_table *table, t_philo *philo);
+void		ft_think(t_table *table, t_philo *philo);
+
+// ft_philosophers_3.c
+
+// ft_write.c
+
+void		ft_write_status(t_philo *philo, t_actions action);
+void		ft_write_statusd(t_philo *philo, t_actions action);
+
+// ft_parsing.c
+
+void		ft_init(t_table **table);
+void		ft_parse(t_table *table);
+void		ft_forks(t_table *table, t_philo *philo, int pos);
+void		ft_init_philosophers(t_table *table);
+
+// ft_utils.c
+
+long		ft_gettimeofday(void);
+void		ft_usleep(long msec, t_table *table);
+void		ft_free(t_table *table);
+
+// ft_utils_2.c
+
+void		ft_wait_philosophers(t_table *table, int *wait);
+int			ft_wait(t_mtx *mutex, int *wait);
+int			ft_is_died(t_philo *philo);
+int			ft_simulation_finished(t_table *table);
+
+// ft_lib.c
+
+void		*ft_calloc(size_t count, size_t size);
+int			ft_atoi(const char *str);
+void		ft_putstr_fd(char *s, int fd);
 
 #endif

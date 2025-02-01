@@ -27,7 +27,10 @@ void	*ft_routine(void *data)
 	philo = (t_philo *)data;
 	table = philo->table;
 	ft_wait_philosophers(table, &table->wait_start);
-	while (!ft_simulation_finished(table))
+	pthread_mutex_lock(&philo->mutex);
+	philo->last_meal = ft_gettimeofday();
+	pthread_mutex_unlock(&philo->mutex);
+	while (ft_simulation_finished(table) != 1)
 	{
 		if (philo->full)
 			break ;
@@ -40,10 +43,26 @@ void	*ft_routine(void *data)
 
 void	*ft_monitor(void *data)
 {
+	int			i;
 	t_table		*table;
 
 	table = (t_table *)data;
-	ft_wait_philosophers(table, &table->wait_monitor);
+	ft_wait_philosophers(table, &table->wait_start);
+	while (ft_simulation_finished(table) != 1)
+	{
+		i = 0;
+		while (i < table->nb_philo && ft_simulation_finished(table) != 1)
+		{
+			if (ft_is_died(&table->philo[i]) == 1)
+			{
+				pthread_mutex_lock(&table->info);
+				table->end_simulation = 1;
+				pthread_mutex_unlock(&table->info);
+				ft_write_status(&table->philo[i], DIE);
+			}
+			i++;
+		}
+	}
 	return (NULL);
 }
 

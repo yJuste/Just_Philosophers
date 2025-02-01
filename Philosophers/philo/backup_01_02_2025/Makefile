@@ -3,7 +3,15 @@ NAME = philo
 CC = cc
 CFLAGS = -g # -Wall -Wextra -Werror
 
-SRC = main.c
+SRC =	main.c			\
+	ft_philosophers.c	\
+	ft_philosophers_2.c	\
+	ft_philosophers_3.c	\
+	ft_write.c		\
+	ft_parsing.c		\
+	ft_utils.c		\
+	ft_utils_2.c		\
+	ft_lib.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -45,4 +53,7 @@ help:
 norm:
 	@norminette $(NORMINETTE)
 
-.PHONY: all clean fclean re rf s help nrom
+sign:
+	@codesign --entitlements entitlements.plist --sign - $(NAME)
+
+.PHONY: all clean fclean re rf s help norm
