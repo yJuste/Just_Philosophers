@@ -81,4 +81,32 @@ typedef enum e_actions
 
 // main.c
 
+int		main(void);
+
+// ft_parsing.c
+
+void		ft_init(t_table **table);
+void		ft_parse(t_table *table);
+void		ft_init_philosophers(t_table *table);
+
+// ft_philosophers.c
+
+void		ft_create_philosophers(t_table *table);
+void		ft_end_simulation(t_table *table);
+
+// ft_routine.c
+
+void		*ft_routine(void *data);
+
+// ft_monitoring.c
+
+// ft_utils.c
+
+long		ft_gettimeofday(void);
+void		ft_usleep(long msec);
+
+// ft_lib.c
+
+void		*ft_calloc(size_t count, size_t size);
+
 #endif
