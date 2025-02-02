@@ -37,6 +37,7 @@ void	ft_usleep(long ms)
 		usleep(10);
 }
 
+// status mutex check death info
 int	ft_check_death(t_philo *philo)
 {
 	t_table		*table;
@@ -46,10 +47,10 @@ int	ft_check_death(t_philo *philo)
 	if (table->end_simulation == 1)
 	{
 		pthread_mutex_unlock(&table->info);
-		return (0);
+		return (1);
 	}
 	pthread_mutex_unlock(&table->info);
-	return (1);
+	return (0);
 }
 
 int	ft_spinlock(t_mtx *mutex, int *wait)

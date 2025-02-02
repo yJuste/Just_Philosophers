@@ -13,6 +13,7 @@
 
 // -----------------------PROTOTYPE-------------------------
 void		*ft_routine(void *data);
+void		ft_take_forks(t_philo *philo);
 void		ft_eat(t_philo *philo);
 void		ft_sleep(t_philo *philo);
 void		ft_think(t_philo *philo);
@@ -26,24 +27,36 @@ void	*ft_routine(void *data)
 
 	philo = (t_philo *)data;
 	table = philo->table;
-	while (!ft_spinlock(&table->info, &table->end_simulation))
+	while (!ft_check_death(philo))
 	{
 		ft_eat(philo);
 		ft_sleep(philo);
 		ft_think(philo);
+		philo->meals_taken++;
 	}
 	return (NULL);
 }
 
+// eat_mutex -- last_meal;
 void	ft_eat(t_philo *philo)
 {
+	pthread_mutex_lock(&philo->left_fork->fork);
+	ft_write(philo, LEFT_FORK);
+	pthread_mutex_lock(&philo->right_fork->fork);
+	ft_write(philo, RIGHT_FORK);
 	ft_write(philo, EAT);
+	pthread_mutex_lock(&philo->eat_mtx);
+	philo->last_meal = ft_gettimeofday() - philo->table->start_simulation;
+	pthread_mutex_unlock(&philo->eat_mtx);
+	ft_usleep(philo->table->time_to_eat);
+	pthread_mutex_unlock(&philo->left_fork->fork);
+	pthread_mutex_unlock(&philo->right_fork->fork);
 }
 
 void	ft_sleep(t_philo *philo)
 {
-	ft_usleep(philo->table->time_to_sleep);
 	ft_write(philo, SLEEP);
+	ft_usleep(philo->table->time_to_sleep);
 }
 
 void	ft_think(t_philo *philo)

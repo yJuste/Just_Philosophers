@@ -54,8 +54,10 @@ typedef struct s_philo
 {
 	int			id;
 	pthread_t	id_thread;
+	int			meals_taken;
 	long		last_meal;
 	t_mtx		mtx;
+	t_mtx		eat_mtx;
 	t_fork		*left_fork;
 	t_fork		*right_fork;
 	t_table		*table;
@@ -107,6 +109,7 @@ void		ft_die(t_philo *philo);
 // ft_monitoring.c
 
 void		*ft_monitor(void *data);
+int			ft_check_end(t_philo *philo);
 void		ft_write(t_philo *philo, t_actions action);
 
 // ft_utils.c
