@@ -21,15 +21,13 @@ void	ft_create_philosophers(t_table *table)
 	int		i;
 
 	i = 0;
+	table->start_simulation = ft_gettimeofday();
 	while (i < table->nb_philo)
 	{
 		pthread_create(&table->philo[i].id_thread,
 			NULL, ft_routine, &table->philo[i]);
 		i++;
 	}
-	pthread_mutex_lock(&table->info);
-	table->wait_start = 1;
-	pthread_mutex_unlock(&table->info);
 }
 
 void	ft_end_simulation(t_table *table)

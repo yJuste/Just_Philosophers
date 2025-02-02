@@ -52,7 +52,9 @@ typedef struct s_table
 typedef struct s_philo
 {
 	int			id;
+	int			counter;
 	pthread_t	id_thread;
+	long		last_meal;
 	t_mtx		mtx;
 	t_fork		*left_fork;
 	t_fork		*right_fork;
@@ -104,7 +106,7 @@ void		*ft_routine(void *data);
 
 void		ft_write(t_philo *philo, t_actions action);
 long		ft_gettimeofday(void);
-void		ft_usleep(long msec);
+void		ft_usleep(long ms);
 int			ft_spinlock(t_mtx *mutex, int *wait);
 
 // ft_lib.c

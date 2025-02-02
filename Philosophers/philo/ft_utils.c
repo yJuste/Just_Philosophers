@@ -14,7 +14,7 @@
 // -----------------------PROTOTYPE-------------------------
 void		ft_write(t_philo *philo, t_actions action);
 long		ft_gettimeofday(void);
-void		ft_usleep(long msec);
+void		ft_usleep(long ms);
 int			ft_spinlock(t_mtx *mutex, int *wait);
 // ---------------------------------------------------------
 
@@ -39,12 +39,21 @@ void	ft_write(t_philo *philo, t_actions action)
 
 long	ft_gettimeofday(void)
 {
-	return (0);
+	long			time;
+	struct timeval	current_time;
+
+	gettimeofday(&current_time, NULL);
+	time = (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000);
+	return (time);
 }
 
-void	ft_usleep(long msec)
+void	ft_usleep(long ms)
 {
-	return ;
+	long		start_time;
+
+	start_time = ft_gettimeofday();
+	while (ft_gettimeofday() - start_time < ms)
+		usleep(10);
 }
 
 int	ft_spinlock(t_mtx *mutex, int *wait)
