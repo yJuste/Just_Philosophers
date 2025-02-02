@@ -27,6 +27,9 @@ void	ft_create_philosophers(t_table *table)
 			NULL, ft_routine, &table->philo[i]);
 		i++;
 	}
+	pthread_mutex_lock(&table->info);
+	table->wait_start = 1;
+	pthread_mutex_unlock(&table->info);
 }
 
 void	ft_end_simulation(t_table *table)

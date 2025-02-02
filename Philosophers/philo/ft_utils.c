@@ -15,6 +15,7 @@
 void		ft_write(t_philo *philo, t_actions action);
 long		ft_gettimeofday(void);
 void		ft_usleep(long msec);
+int			ft_spinlock(t_mtx *mutex, int *wait);
 // ---------------------------------------------------------
 
 void	ft_write(t_philo *philo, t_actions action)
@@ -44,4 +45,14 @@ long	ft_gettimeofday(void)
 void	ft_usleep(long msec)
 {
 	return ;
+}
+
+int	ft_spinlock(t_mtx *mutex, int *wait)
+{
+	int		spinlock;
+
+	pthread_mutex_lock(mutex);
+	spinlock = *wait;
+	pthread_mutex_unlock(mutex);
+	return (spinlock);
 }

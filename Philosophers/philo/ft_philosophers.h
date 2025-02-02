@@ -40,8 +40,8 @@ typedef struct s_table
 	int			time_to_sleep;
 	int			max_meals;
 	int			wait_start;
+	int			end_simulation;
 	long		start_simulation;
-	long		end_simulation;
 	pthread_t	monitor;
 	t_mtx		info;
 	t_mtx		write;
@@ -81,7 +81,7 @@ typedef enum e_actions
 
 // main.c
 
-int		main(void);
+int			main(void);
 
 // ft_parsing.c
 
@@ -102,8 +102,10 @@ void		*ft_routine(void *data);
 
 // ft_utils.c
 
+void		ft_write(t_philo *philo, t_actions action);
 long		ft_gettimeofday(void);
 void		ft_usleep(long msec);
+int			ft_spinlock(t_mtx *mutex, int *wait);
 
 // ft_lib.c
 
