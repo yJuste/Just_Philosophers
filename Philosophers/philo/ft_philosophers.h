@@ -41,6 +41,7 @@ typedef struct s_table
 	int			max_meals;
 	int			wait_start;
 	int			end_simulation;
+	int			i;
 	long		start_simulation;
 	pthread_t	monitor;
 	t_mtx		info;
@@ -52,7 +53,7 @@ typedef struct s_table
 typedef struct s_philo
 {
 	int			id;
-	int			counter;
+	int			dead_or_alive;
 	pthread_t	id_thread;
 	long		last_meal;
 	t_mtx		mtx;
@@ -99,12 +100,17 @@ void		ft_end_simulation(t_table *table);
 // ft_routine.c
 
 void		*ft_routine(void *data);
+void		ft_eat(t_philo *philo);
+void		ft_sleep(t_philo *philo);
+void		ft_think(t_philo *philo);
 
 // ft_monitoring.c
 
+void		*ft_monitor(void *data);
+void		ft_write(t_philo *philo, t_actions action);
+
 // ft_utils.c
 
-void		ft_write(t_philo *philo, t_actions action);
 long		ft_gettimeofday(void);
 void		ft_usleep(long ms);
 int			ft_spinlock(t_mtx *mutex, int *wait);

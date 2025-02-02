@@ -13,6 +13,9 @@
 
 // -----------------------PROTOTYPE-------------------------
 void		*ft_routine(void *data);
+void		ft_eat(t_philo *philo);
+void		ft_sleep(t_philo *philo);
+void		ft_think(t_philo *philo);
 // ---------------------------------------------------------
 
 void	*ft_routine(void *data)
@@ -22,16 +25,29 @@ void	*ft_routine(void *data)
 
 	philo = (t_philo *)data;
 	table = philo->table;
-	pthread_mutex_lock(&table->info);
-	while (!table->end_simulation)
+	while (!ft_spinlock(&table->info, &table->end_simulation))
 	{
-		printf("Simu not finished\n");
-		printf("No way %d\n", philo->id);
-		printf("gettimeofday:%ld\n", table->start_simulation);
-		ft_usleep(200);
-		printf("gettimeofday:%ld\n", ft_gettimeofday());
-		table->end_simulation = 1;
+		ft_eat(philo);
+		ft_sleep(philo);
+		ft_think(philo);
 	}
-	pthread_mutex_unlock(&table->info);
 	return (NULL);
+}
+
+void	ft_eat(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->mtx);
+	philo->last_meal = ft_gettimeofday() - philo->table->start_simulation;
+	pthread_mutex_unlock(&philo->mtx);
+}
+
+void	ft_sleep(t_philo *philo)
+{
+	ft_usleep(philo->table->time_to_sleep);
+	ft_write(philo, SLEEP);
+}
+
+void	ft_think(t_philo *philo)
+{
+	ft_write(philo, THINK);
 }

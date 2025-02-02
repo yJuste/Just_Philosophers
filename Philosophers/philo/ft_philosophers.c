@@ -28,6 +28,7 @@ void	ft_create_philosophers(t_table *table)
 			NULL, ft_routine, &table->philo[i]);
 		i++;
 	}
+	pthread_create(&table->monitor, NULL, ft_monitor, table);
 }
 
 void	ft_end_simulation(t_table *table)
@@ -38,6 +39,7 @@ void	ft_end_simulation(t_table *table)
 	if (table->end_simulation == 0)
 		while (i < table->nb_philo)
 			pthread_join(table->philo[i++].id_thread, NULL);
+	pthread_join(table->monitor, NULL);
 	i = 0;
 	while (i < table->nb_philo)
 		pthread_mutex_destroy(&table->fork[i++].fork);
