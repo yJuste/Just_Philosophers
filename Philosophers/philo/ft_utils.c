@@ -14,6 +14,7 @@
 // -----------------------PROTOTYPE-------------------------
 long		ft_gettimeofday(void);
 void		ft_usleep(long ms);
+int		ft_check_death(t_philo *philo);
 int			ft_spinlock(t_mtx *mutex, int *wait);
 // ---------------------------------------------------------
 
@@ -34,6 +35,21 @@ void	ft_usleep(long ms)
 	start_time = ft_gettimeofday();
 	while (ft_gettimeofday() - start_time < ms)
 		usleep(10);
+}
+
+int	ft_check_death(t_philo *philo)
+{
+	t_table		*table;
+
+	table = philo->table;
+	pthread_mutex_lock(&table->info);
+	if (table->end_simulation == 1)
+	{
+		pthread_mutex_unlock(&table->info);
+		return (0);
+	}
+	pthread_mutex_unlock(&table->info);
+	return (1);
 }
 
 int	ft_spinlock(t_mtx *mutex, int *wait)

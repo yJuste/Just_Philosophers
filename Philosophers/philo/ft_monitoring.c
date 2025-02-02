@@ -30,18 +30,18 @@ void	*ft_monitor(void *data)
 		while (i < table->nb_philo)
 		{
 			philo = &table->philo[i];
-			pthread_mutex_lock(&philo->mtx);
+			pthread_mutex_lock(&table->info);
 			last_meal = philo->last_meal;
-			pthread_mutex_unlock(&philo->mtx);
+			pthread_mutex_unlock(&table->info);
 			if (last_meal >= table->time_to_die)
 			{
 				ft_write(philo, DIE);
 				pthread_mutex_lock(&table->info);
 				table->end_simulation = 1;
 				pthread_mutex_unlock(&table->info);
+					
 				return (NULL);
 			}
-			ft_usleep(1);
 			i++;
 		}
 	}
@@ -52,13 +52,6 @@ void	ft_write(t_philo *philo, t_actions action)
 {
 	long		elapsed;
 
-	pthread_mutex_lock(&philo->table->info);
-	if (philo->table->end_simulation == 1)
-	{
-		pthread_mutex_unlock(&philo->table->info);
-		return ;
-	}
-	pthread_mutex_unlock(&philo->table->info);
 	elapsed = ft_gettimeofday() - philo->table->start_simulation;
 	pthread_mutex_lock(&philo->table->write);
 	if (action == LEFT_FORK)

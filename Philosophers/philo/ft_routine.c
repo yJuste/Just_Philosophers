@@ -16,6 +16,7 @@ void		*ft_routine(void *data);
 void		ft_eat(t_philo *philo);
 void		ft_sleep(t_philo *philo);
 void		ft_think(t_philo *philo);
+void		ft_die(t_philo *philo);
 // ---------------------------------------------------------
 
 void	*ft_routine(void *data)
@@ -36,9 +37,7 @@ void	*ft_routine(void *data)
 
 void	ft_eat(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->mtx);
-	philo->last_meal = ft_gettimeofday() - philo->table->start_simulation;
-	pthread_mutex_unlock(&philo->mtx);
+	ft_write(philo, EAT);
 }
 
 void	ft_sleep(t_philo *philo)
