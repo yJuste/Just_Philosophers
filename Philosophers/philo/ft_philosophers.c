@@ -21,13 +21,11 @@ void	ft_create_philosophers(t_table *table)
 	int		i;
 
 	i = 0;
-	pthread_create(&table->monitor1, NULL, ft_monitor, &table->philo[0]);
-	pthread_create(&table->monitor2, NULL, ft_monitor, &table->philo[1]);
-	pthread_create(&table->monitor3, NULL, ft_monitor, &table->philo[2]);
+	//pthread_create(&table->monitor, NULL, ft_monitor, table->philo);
 	while (i < table->nb_philo)
 	{
-		pthread_create(&table->philo[i].id_thread,
-			NULL, ft_routine, &table->philo[i]);
+		//pthread_create(&table->philo[i].id_thread,
+		//	NULL, ft_routine, &table->philo[i]);
 		i++;
 	}
 }
@@ -40,9 +38,7 @@ void	ft_end_simulation(t_table *table)
 	if (table->end_simulation == 0)
 		while (i < table->nb_philo)
 			pthread_join(table->philo[i++].id_thread, NULL);
-	pthread_join(table->monitor1, NULL);
-	pthread_join(table->monitor2, NULL);
-	pthread_join(table->monitor3, NULL);
+	pthread_join(table->monitor, NULL);
 	i = 0;
 	while (i < table->nb_philo)
 		pthread_mutex_destroy(&table->fork[i++].fork);

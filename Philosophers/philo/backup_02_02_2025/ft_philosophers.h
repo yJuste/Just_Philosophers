@@ -39,7 +39,9 @@ typedef struct s_table
 	int			time_to_eat;
 	int			time_to_sleep;
 	int			max_meals;
+	int			wait_start;
 	int			end_simulation;
+	int			i;
 	long		start_simulation;
 	pthread_t	monitor;
 	t_mtx		info;
@@ -51,10 +53,12 @@ typedef struct s_table
 typedef struct s_philo
 {
 	int			id;
-	int			meals_taken;
 	pthread_t	id_thread;
+	int			meals_taken;
 	long		last_meal;
 	t_mtx		mtx;
+	t_mtx		status;
+	t_mtx		eat_mtx;
 	t_fork		*left_fork;
 	t_fork		*right_fork;
 	t_table		*table;
@@ -97,13 +101,24 @@ void		ft_end_simulation(t_table *table);
 
 // ft_routine.c
 
+void		*ft_routine(void *data);
+void		ft_eat(t_philo *philo);
+void		ft_sleep(t_philo *philo);
+void		ft_think(t_philo *philo);
+void		ft_die(t_philo *philo);
+
 // ft_monitoring.c
 
+void		*ft_monitor(void *data);
+int			ft_check_end(t_philo *philo);
+void		ft_write(t_philo *philo, t_actions action);
 
 // ft_utils.c
 
 long		ft_gettimeofday(void);
 void		ft_usleep(long ms);
+int		ft_check_death(t_philo *philo);
+int			ft_spinlock(t_mtx *mutex, int *wait);
 
 // ft_lib.c
 

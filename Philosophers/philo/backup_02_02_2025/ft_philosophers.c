@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_utils.c                                         :+:      :+:    :+:   */
+/*   ft_philosophers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By:                                            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,25 +12,39 @@
 #include "ft_philosophers.h"
 
 // -----------------------PROTOTYPE-------------------------
-long		ft_gettimeofday(void);
-void		ft_usleep(long ms);
+void		ft_create_philosophers(t_table *table);
+void		ft_end_simulation(t_table *table);
 // ---------------------------------------------------------
 
-long	ft_gettimeofday(void)
+void	ft_create_philosophers(t_table *table)
 {
-	long			time;
-	struct timeval	current_time;
+	int		i;
 
-	gettimeofday(&current_time, NULL);
-	time = (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000);
-	return (time);
+	i = 0;
+	pthread_create(&table->monitor, NULL, ft_monitor, table->philo);
+	while (i < table->nb_philo)
+	{
+		pthread_create(&table->philo[i].id_thread,
+			NULL, ft_routine, &table->philo[i]);
+		i++;
+	}
 }
 
-void	ft_usleep(long ms)
+void	ft_end_simulation(t_table *table)
 {
-	long		start_time;
+	int		i;
 
-	start_time = ft_gettimeofday();
-	while (ft_gettimeofday() - start_time < ms)
-		usleep(10);
+	i = 0;
+	if (table->end_simulation == 0)
+		while (i < table->nb_philo)
+			pthread_join(table->philo[i++].id_thread, NULL);
+	pthread_join(table->monitor, NULL);
+	i = 0;
+	while (i < table->nb_philo)
+		pthread_mutex_destroy(&table->fork[i++].fork);
+	pthread_mutex_destroy(&table->info);
+	pthread_mutex_destroy(&table->write);
+	free(table->philo);
+	free(table->fork);
+	free(table);
 }
