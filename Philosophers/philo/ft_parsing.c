@@ -63,6 +63,7 @@ void	ft_init_philosophers(t_table *table)
 			philo->right_fork = &table->fork[i + 1];
 		}
 		pthread_mutex_init(&philo->mtx, NULL);
+		pthread_mutex_init(&philo->status, NULL);
 		pthread_mutex_init(&philo->eat_mtx, NULL);
 		philo->table = table;
 		i++;

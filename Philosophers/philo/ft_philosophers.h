@@ -43,7 +43,9 @@ typedef struct s_table
 	int			end_simulation;
 	int			i;
 	long		start_simulation;
-	pthread_t	monitor;
+	pthread_t	monitor1;
+	pthread_t	monitor2;
+	pthread_t	monitor3;
 	t_mtx		info;
 	t_mtx		write;
 	t_fork		*fork;
@@ -57,6 +59,7 @@ typedef struct s_philo
 	int			meals_taken;
 	long		last_meal;
 	t_mtx		mtx;
+	t_mtx		status;
 	t_mtx		eat_mtx;
 	t_fork		*left_fork;
 	t_fork		*right_fork;
