@@ -31,10 +31,10 @@ void	*ft_monitor(void *data)
 		{
 			if (ft_check_last_meal(&philo[i]))
 			{
+				pthread_mutex_lock(&table->write);
 				pthread_mutex_lock(&table->info);
 				table->end_simulation = 1;
 				pthread_mutex_unlock(&table->info);
-				pthread_mutex_lock(&table->write);
 				printf("%ld %d died\n",
 					ft_gettimeofday() - table->start_simulation,
 					philo->id);
@@ -43,6 +43,7 @@ void	*ft_monitor(void *data)
 			}
 			i++;
 		}
+		ft_usleep(1);
 	}
 	return (NULL);
 }
