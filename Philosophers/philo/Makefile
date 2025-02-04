@@ -2,6 +2,12 @@ NAME = philo
 
 CC = cc
 CFLAGS = -g # -Wall -Wextra -Werror
+FLAGS = -pthread
+IFLAGS = -I $(INC_DIR)
+
+SRC_DIR = src
+INC_DIR = include
+OBJ_DIR = obj
 
 SRC =	main.c			\
 	ft_parsing.c		\
@@ -12,23 +18,29 @@ SRC =	main.c			\
 	ft_utils.c		\
 	ft_lib.c
 
-OBJ = $(SRC:.c=.o)
+OBJ = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(notdir $(basename $(SRC)))))
 
-NORMINETTE =	*.c		\
-		*.h
+NORMINETTE =	$(SRC_DIR)/*.c		\
+		$(INC_DIR)/*.h
 
 RESET			= "\033[0m"
 GREEN			= "\033[92m"	# Green
 RED			= "\033[91m"	# Red
 
-all: $(NAME)
+all: makedir $(NAME)
 
 $(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ)
+	@$(CC) $(CFLAGS) $(IFLAGS) $(OBJ) -o $(NAME)
 	@echo $(GREEN)"--- EXECUTABLE ./$(NAME) is ready ---`make help`"$(RESET)
 
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) $(CFLAGS) -I $(INC_DIR) -c $< -o $@
+
+makedir:
+	@mkdir -p $(OBJ_DIR)
+
 clean:
-	rm -f $(OBJ)
+	rm -rf $(OBJ_DIR)
 
 fclean: clean
 	rm -f $(NAME)
@@ -37,7 +49,7 @@ fclean: clean
 re: fclean all
 
 rf: re
-	rm -f $(OBJ)
+	rm -rf $(OBJ_DIR)
 	rm -f $(NAME)
 	@echo $(RED)"--- EXECUTABLE ./$(NAME) is removed ---"$(RESET)
 
@@ -46,7 +58,7 @@ s:
 
 help:
 	@echo $(GREEN)
-	@head -n 11 ft_philosophers.h
+	@head -n 11 $(INC_DIR)/ft_philosophers.h
 	@echo $(RESET)
 
 norm:
