@@ -12,16 +12,8 @@
 #include "ft_philosophers.h"
 
 // -----------------------PROTOTYPE-------------------------
-int			ft_is_died(t_philo *philo);
 void		*ft_monitor(void *data);
 // ---------------------------------------------------------
-
-int	ft_is_died(t_philo *philo)
-{
-	if (philo->table->i == 1)
-		return (1);
-	return (0);
-}
 
 void	*ft_monitor(void *data)
 {
@@ -32,13 +24,22 @@ void	*ft_monitor(void *data)
 	i = 0;
 	table = (t_table *)data;
 	philo = table->philo;
-	while (!ft_is_died(philo))
+	while (1)
 	{
-		if (table->i == table->nb_philo)
+		i = 0;
+		while (i < philo->table->nb_philo)
 		{
-			printf("stop\n");
-			return (NULL);
+			if (ft_check_last_meal(&philo[i]))
+			{
+				ft_write(&philo[i], DIE);
+				pthread_mutex_lock(&table->info);
+				table->end_simulation = 1;
+				pthread_mutex_unlock(&table->info);
+				return (NULL);
+			}
+			i++;
 		}
+		ft_usleep(1);
 	}
 	return (NULL);
 }

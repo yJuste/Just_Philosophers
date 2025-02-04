@@ -8,6 +8,7 @@ SRC =	main.c			\
 	ft_philosophers.c	\
 	ft_routine.c		\
 	ft_monitoring.c		\
+	ft_check.c		\
 	ft_utils.c		\
 	ft_lib.c
 

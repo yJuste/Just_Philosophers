@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lib.c                                           :+:      :+:    :+:   */
+/*   ft_check.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By:                                            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,24 +12,31 @@
 #include "ft_philosophers.h"
 
 // -----------------------PROTOTYPE-------------------------
-void		*ft_calloc(size_t count, size_t size);
+int			ft_check_death(t_philo *philo);
+int			ft_check_last_meal(t_philo *philo);
 // ---------------------------------------------------------
 
-void	*ft_calloc(size_t count, size_t size)
+int	ft_check_death(t_philo *philo)
 {
-	size_t		i;
-	size_t		tot;
-	void		*ptr;
-
-	i = 0;
-	tot = count * size;
-	ptr = malloc(tot);
-	if (!ptr)
-		return (NULL);
-	while (i < tot)
+	pthread_mutex_lock(&philo->table->info);
+	if (philo->table->end_simulation == 1)
 	{
-		((char *)ptr)[i] = 0;
-		i++;
+		pthread_mutex_unlock(&philo->table->info);
+		return (1);
 	}
-	return (ptr);
+	pthread_mutex_unlock(&philo->table->info);
+	return (0);
+}
+
+int	ft_check_last_meal(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->time);
+	if (ft_gettimeofday() - philo->table->start_simulation
+		- philo->last_meal > philo->table->time_to_die)
+	{
+		pthread_mutex_unlock(&philo->time);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->time);
+	return (0);
 }
