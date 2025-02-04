@@ -16,8 +16,7 @@ SRC =	main.c			\
 	ft_monitoring.c		\
 	ft_check.c		\
 	ft_utils.c		\
-	ft_lib.c		\
-	ft_lib_2.c
+	ft_lib.c
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(notdir $(basename $(SRC)))))
 
@@ -25,7 +24,7 @@ NORMINETTE =	$(SRC_DIR)/*.c		\
 		$(INC_DIR)/*.h
 
 RESET			= "\033[0m"
-GREEN			= "\033[92m"	# Green
+GREEN			= "\033[32m"	# Green
 RED			= "\033[91m"	# Red
 
 all: $(NAME)
@@ -58,7 +57,7 @@ s:
 
 help:
 	@echo $(GREEN)
-	@head -n 11 $(INC_DIR)/ft_philosophers.h
+	@head -n 19 $(INC_DIR)/ft_philosophers.h
 	@echo $(RESET)
 
 norm:
