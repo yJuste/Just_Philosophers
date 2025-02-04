@@ -31,6 +31,7 @@ void	*ft_monitor(void *data)
 		{
 			if (ft_check_last_meal(&philo[i]))
 			{
+				ft_usleep(1);
 				ft_write(&philo[i], DIE);
 				pthread_mutex_lock(&table->info);
 				table->end_simulation = 1;

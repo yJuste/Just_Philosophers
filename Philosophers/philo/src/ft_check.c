@@ -62,7 +62,7 @@ int	ft_check_atoi(const char *s, int sign)
 	while (*s >= '0' && *s <= '9')
 	{
 		res = res * 10 + (*s++ - '0');
-		if (res > INT_MAX)
+		if (res > 2147483647)
 			return (ft_putstr_fd("Error\nAtoi Overflow.\n", 2), 1);
 	}
 	while (*s == ' ' || (*s >= 9 && *s <= 13))
