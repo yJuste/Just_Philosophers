@@ -6,7 +6,7 @@
 /*   By:                                            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created:   by Just'                               #+#    #+#             */
-/*   Updated:   by Just'                              ###   ########.fr       */
+/*   Updated: 2025/02/04 18:23:43 by jlongin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_philosophers.h"
@@ -31,16 +31,18 @@ void	*ft_monitor(void *data)
 		{
 			if (ft_check_last_meal(&philo[i]))
 			{
-				ft_usleep(1);
-				ft_write(&philo[i], DIE);
 				pthread_mutex_lock(&table->info);
 				table->end_simulation = 1;
 				pthread_mutex_unlock(&table->info);
+				pthread_mutex_lock(&table->write);
+				printf("%ld %d died\n",
+					ft_gettimeofday() - table->start_simulation,
+					philo->id);
+				pthread_mutex_unlock(&table->write);
 				return (NULL);
 			}
 			i++;
 		}
-		ft_usleep(1);
 	}
 	return (NULL);
 }

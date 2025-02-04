@@ -6,7 +6,7 @@
 /*   By:                                            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created:   by Just'                               #+#    #+#             */
-/*   Updated:   by Just'                              ###   ########.fr       */
+/*   Updated: 2025/02/04 18:00:58 by jlongin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_philosophers.h"
@@ -75,11 +75,11 @@ void	ft_init_philosophers(t_table *table)
 		philo->id = i + 1;
 		philo->last_meal = table->start_simulation;
 		philo->left_fork = &table->fork[(i + 1) % table->nb_philo];
-		philo->right_fork = &table->fork[i];
+		philo->right_fork = &table->fork[i % table->nb_philo];
 		if (philo->id % 2 == 0)
 			philo->left_fork = &table->fork[i % table->nb_philo];
 		if (philo->id % 2 == 0)
-			philo->right_fork = &table->fork[i + 1];
+			philo->right_fork = &table->fork[(i + 1) % table->nb_philo];
 		pthread_mutex_init(&philo->time, NULL);
 		philo->table = table;
 		i++;

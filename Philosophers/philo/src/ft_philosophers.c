@@ -6,7 +6,7 @@
 /*   By:                                            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created:   by Just'                               #+#    #+#             */
-/*   Updated:   by Just'                              ###   ########.fr       */
+/*   Updated: 2025/02/04 18:07:27 by jlongin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_philosophers.h"
@@ -40,10 +40,11 @@ void	ft_end_simulation(t_table *table)
 	pthread_join(table->monitor, NULL);
 	i = 0;
 	while (i < table->nb_philo)
-		pthread_mutex_destroy(&table->fork[i++].fork);
-	i = 0;
-	while (i < table->nb_philo)
-		pthread_mutex_destroy(&table->philo[i++].time);
+	{
+		pthread_mutex_destroy(&table->fork[i].fork);
+		pthread_mutex_destroy(&table->philo[i].time);
+		i++;
+	}
 	pthread_mutex_destroy(&table->info);
 	pthread_mutex_destroy(&table->write);
 	free(table->philo);
