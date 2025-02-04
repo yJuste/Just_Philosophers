@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_philosophers.c                                  :+:      :+:    :+:   */
+/*   ft_routine.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By:                                            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,39 +12,21 @@
 #include "ft_philosophers.h"
 
 // -----------------------PROTOTYPE-------------------------
-void		ft_create_philosophers(t_table *table);
-void		ft_end_simulation(t_table *table);
+void		*ft_routine(void *data);
 // ---------------------------------------------------------
 
-void	ft_create_philosophers(t_table *table)
+void	*ft_routine(void *data)
 {
-	int		i;
+	t_table		*table;
+	t_philo		*philo;
 
-	i = 0;
-	pthread_create(&table->monitor, NULL, ft_monitor, table);
-	while (i < table->nb_philo)
+	philo = (t_philo *)data;
+	table = philo->table;
+	table->i = 0;
+	while (!ft_is_died(philo))
 	{
-		pthread_create(&table->philo[i].id_thread,
-			NULL, ft_routine, &table->philo[i]);
-		i++;
+		printf("id: %d, i:%d\n", philo->id, table->i);
+		table->i++;
 	}
-}
-
-void	ft_end_simulation(t_table *table)
-{
-	int		i;
-
-	i = 0;
-	if (table->end_simulation == 0)
-		while (i < table->nb_philo)
-			pthread_join(table->philo[i++].id_thread, NULL);
-	pthread_join(table->monitor, NULL);
-	i = 0;
-	while (i < table->nb_philo)
-		pthread_mutex_destroy(&table->fork[i++].fork);
-	pthread_mutex_destroy(&table->info);
-	pthread_mutex_destroy(&table->write);
-	free(table->philo);
-	free(table->fork);
-	free(table);
+	return (NULL);
 }

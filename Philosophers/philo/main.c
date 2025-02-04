@@ -15,8 +15,8 @@ int	main(void)
 {
 	t_table		*table;
 
-	//ft_init(&table);
-	//ft_create_philosophers(table);
-	//ft_end_simulation(table);
+	ft_init(&table);
+	ft_create_philosophers(table);
+	ft_end_simulation(table);
 	return (0);
 }

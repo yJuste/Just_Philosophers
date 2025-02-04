@@ -40,6 +40,7 @@ typedef struct s_table
 	int			time_to_sleep;
 	int			max_meals;
 	int			end_simulation;
+	int			i;
 	long		start_simulation;
 	pthread_t	monitor;
 	t_mtx		info;
@@ -97,8 +98,12 @@ void		ft_end_simulation(t_table *table);
 
 // ft_routine.c
 
+void		*ft_routine(void *data);
+
 // ft_monitoring.c
 
+int			ft_is_died(t_philo *philo);
+void		*ft_monitor(void *data);
 
 // ft_utils.c
 

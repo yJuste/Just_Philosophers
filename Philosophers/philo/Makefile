@@ -6,6 +6,8 @@ CFLAGS = -g # -Wall -Wextra -Werror
 SRC =	main.c			\
 	ft_parsing.c		\
 	ft_philosophers.c	\
+	ft_routine.c		\
+	ft_monitoring.c		\
 	ft_utils.c		\
 	ft_lib.c
 

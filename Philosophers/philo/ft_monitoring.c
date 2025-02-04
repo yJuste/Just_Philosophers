@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_philosophers.c                                  :+:      :+:    :+:   */
+/*   ft_monitoring.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By:                                            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,39 +12,33 @@
 #include "ft_philosophers.h"
 
 // -----------------------PROTOTYPE-------------------------
-void		ft_create_philosophers(t_table *table);
-void		ft_end_simulation(t_table *table);
+int			ft_is_died(t_philo *philo);
+void		*ft_monitor(void *data);
 // ---------------------------------------------------------
 
-void	ft_create_philosophers(t_table *table)
+int	ft_is_died(t_philo *philo)
 {
-	int		i;
-
-	i = 0;
-	pthread_create(&table->monitor, NULL, ft_monitor, table);
-	while (i < table->nb_philo)
-	{
-		pthread_create(&table->philo[i].id_thread,
-			NULL, ft_routine, &table->philo[i]);
-		i++;
-	}
+	if (philo->table->i == 1)
+		return (1);
+	return (0);
 }
 
-void	ft_end_simulation(t_table *table)
+void	*ft_monitor(void *data)
 {
-	int		i;
+	int			i;
+	t_table		*table;
+	t_philo		*philo;
 
 	i = 0;
-	if (table->end_simulation == 0)
-		while (i < table->nb_philo)
-			pthread_join(table->philo[i++].id_thread, NULL);
-	pthread_join(table->monitor, NULL);
-	i = 0;
-	while (i < table->nb_philo)
-		pthread_mutex_destroy(&table->fork[i++].fork);
-	pthread_mutex_destroy(&table->info);
-	pthread_mutex_destroy(&table->write);
-	free(table->philo);
-	free(table->fork);
-	free(table);
+	table = (t_table *)data;
+	philo = table->philo;
+	while (!ft_is_died(philo))
+	{
+		if (table->i == table->nb_philo)
+		{
+			printf("stop\n");
+			return (NULL);
+		}
+	}
+	return (NULL);
 }

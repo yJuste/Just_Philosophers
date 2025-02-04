@@ -36,15 +36,13 @@ void	*ft_monitor(void *data)
 		{
 			if (ft_check_end(philo))
 			{
-				pthread_mutex_lock(&table->write);
-				//ft_write(philo, DIE);
-				printf("%ld %d died\n", ft_gettimeofday() - table->start_simulation, philo[i].id);
+				ft_write(philo, DIE);
 				pthread_mutex_lock(&table->info);
 				table->end_simulation = 1;
 				pthread_mutex_unlock(&table->info);
-				pthread_mutex_unlock(&table->write);
 				return (NULL);
 			}
+			i++;
 		}
 	}
 	return (NULL);
