@@ -16,7 +16,8 @@ SRC =	main.c			\
 	ft_monitoring.c		\
 	ft_check.c		\
 	ft_utils.c		\
-	ft_lib.c
+	ft_lib.c		\
+	ft_lib_2.c
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(notdir $(basename $(SRC)))))
 

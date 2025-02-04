@@ -12,36 +12,49 @@
 #include "ft_philosophers.h"
 
 // -----------------------PROTOTYPE-------------------------
-void		ft_init(t_table **table);
-void		ft_parse(t_table *table);
+int			ft_init(t_table **table, char **argv);
+int			ft_parse(t_table *table, char **argv);
 void		ft_init_philosophers(t_table *table);
 // ---------------------------------------------------------
 
-void	ft_init(t_table **table)
+int	ft_init(t_table **table, char **argv)
 {
 	int		i;
 
+	i = 0;
 	(*table) = ft_calloc(1, sizeof(t_table));
-	ft_parse(*table);
-	(*table)->philo = ft_calloc((*table)->nb_philo, sizeof(t_philo));
+	if (ft_parse(*table, argv) == 1)
+		return (1);
+	/*(*table)->philo = ft_calloc((*table)->nb_philo, sizeof(t_philo));
 	(*table)->fork = ft_calloc((*table)->nb_philo, sizeof(t_fork));
-	(*table)->philo->id = 1;
 	pthread_mutex_init(&(*table)->info, NULL);
 	pthread_mutex_init(&(*table)->write, NULL);
-	i = 0;
 	while (i < (*table)->nb_philo)
 		pthread_mutex_init(&(*table)->fork[i++].fork, NULL);
 	(*table)->start_simulation = ft_gettimeofday();
-	ft_init_philosophers(*table);
+	ft_init_philosophers(*table);*/
+	return (0);
 }
 
-void	ft_parse(t_table *table)
+int	ft_parse(t_table *table, char **argv)
 {
-	table->nb_philo = 3;
-	table->time_to_die = 200;
-	table->time_to_eat = 100;
-	table->time_to_sleep = 100;
-	table->max_meals = -1;
+	int		i;
+
+	i = 1;
+	while (i < 5)
+		if (ft_check_atoi(argv[i++], 1) == 1)
+			return (1);
+	table->nb_philo = ft_atoi(argv[1]);
+	table->time_to_die = ft_atoi(argv[2]);
+	table->time_to_eat = ft_atoi(argv[3]);
+	table->time_to_sleep = ft_atoi(argv[4]);
+	if (argv[5])
+	{
+		if (ft_check_atoi(argv[5], 1) == 1)
+			return (1);
+		table->max_meals = ft_atoi(argv[5]);
+	}
+	return (0);
 }
 
 void	ft_init_philosophers(t_table *table)

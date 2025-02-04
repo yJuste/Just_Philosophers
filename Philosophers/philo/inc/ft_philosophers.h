@@ -17,7 +17,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <errno.h>
+# include <limits.h>
 
 // thread
 # include <pthread.h>
@@ -82,12 +82,12 @@ typedef enum e_actions
 
 // main.c
 
-int			main(void);
+int		main(int argc, char **argv);
 
 // ft_parsing.c
 
-void		ft_init(t_table **table);
-void		ft_parse(t_table *table);
+int			ft_init(t_table **table, char **argv);
+int			ft_parse(t_table *table, char **argv);
 void		ft_init_philosophers(t_table *table);
 
 // ft_philosophers.c
@@ -119,6 +119,14 @@ void		ft_write(t_philo *philo, t_actions action);
 
 // ft_lib.c
 
+int			ft_atoi(const char *s);
 void		*ft_calloc(size_t count, size_t size);
+void		ft_putstr_fd(char *s, int fd);
+
+// ft_lib_2.c
+
+int		ft_check_atoi(const char *s, int sign);
+int		ft_check_int_min(const char *s, int sign);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
 #endif
