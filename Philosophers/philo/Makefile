@@ -2,11 +2,11 @@ NAME = philo
 
 CC = cc
 CFLAGS = -g # -Wall -Wextra -Werror
-FLAGS = -pthread
+FLAGS = # -pthread
 IFLAGS = -I $(INC_DIR)
 
 SRC_DIR = src
-INC_DIR = include
+INC_DIR = inc
 OBJ_DIR = obj
 
 SRC =	main.c			\
@@ -27,20 +27,19 @@ RESET			= "\033[0m"
 GREEN			= "\033[92m"	# Green
 RED			= "\033[91m"	# Red
 
-all: makedir $(NAME)
+all: $(NAME)
 
 $(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) $(IFLAGS) $(OBJ) -o $(NAME)
 	@echo $(GREEN)"--- EXECUTABLE ./$(NAME) is ready ---`make help`"$(RESET)
 
+# -c $<		prend la sous-regle .c
+# -o $@		genere les .o
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) $(CFLAGS) -I $(INC_DIR) -c $< -o $@
-
-makedir:
-	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(OBJ_DIR)
+	rm -rf $(OBJ_DIR)/*.o
 
 fclean: clean
 	rm -f $(NAME)
@@ -49,7 +48,7 @@ fclean: clean
 re: fclean all
 
 rf: re
-	rm -rf $(OBJ_DIR)
+	rm -rf $(OBJ_DIR)/*.o
 	rm -f $(NAME)
 	@echo $(RED)"--- EXECUTABLE ./$(NAME) is removed ---"$(RESET)
 
