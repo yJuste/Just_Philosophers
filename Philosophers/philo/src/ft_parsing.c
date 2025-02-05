@@ -29,6 +29,7 @@ int	ft_init(t_table **table, char **argv)
 	(*table)->fork = ft_calloc((*table)->nb_philo, sizeof(t_fork));
 	pthread_mutex_init(&(*table)->info, NULL);
 	pthread_mutex_init(&(*table)->write, NULL);
+	pthread_mutex_init(&(*table)->replete, NULL);
 	while (i < (*table)->nb_philo)
 		pthread_mutex_init(&(*table)->fork[i++].fork, NULL);
 	(*table)->start_simulation = ft_gettimeofday();
@@ -52,11 +53,12 @@ int	ft_parse(t_table *table, char **argv)
 	table->time_to_die = ft_atoi(argv[2]);
 	table->time_to_eat = ft_atoi(argv[3]);
 	table->time_to_sleep = ft_atoi(argv[4]);
+	table->max_meals = -1;
 	if (argv[5])
 	{
 		if (ft_check_atoi(argv[5], 1) == 1)
 			return (1);
-		if (ft_atoi(argv[5]) <= 0)
+		if (ft_atoi(argv[5]) < 0)
 			return (ft_putstr_fd("Error\nNegative number.\n", 2), 1);
 		table->max_meals = ft_atoi(argv[5]);
 	}

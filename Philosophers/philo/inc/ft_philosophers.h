@@ -46,11 +46,13 @@ typedef struct s_table
 	int			time_to_eat;
 	int			time_to_sleep;
 	int			max_meals;
+	int			full;
 	int			end_simulation;
 	long		start_simulation;
 	pthread_t	monitor;
 	t_mtx		info;
 	t_mtx		write;
+	t_mtx		replete;
 	t_fork		*fork;
 	t_philo		*philo;
 }	t_table;
@@ -60,7 +62,6 @@ typedef struct s_philo
 	int			id;
 	pthread_t	id_thread;
 	long		last_meal;
-	int			meals_taken;
 	t_mtx		time;
 	t_fork		*left_fork;
 	t_fork		*right_fork;
@@ -108,6 +109,7 @@ void		*ft_routine(void *data);
 void		ft_eat(t_philo *philo);
 void		ft_sleep(t_philo *philo);
 void		ft_think(t_philo *philo);
+void		ft_i_am_replete(t_table *table);
 
 // ft_monitoring.c
 
@@ -117,6 +119,7 @@ void		*ft_monitor(void *data);
 
 int			ft_check_death(t_philo *philo);
 int			ft_check_last_meal(t_philo *philo);
+int			ft_check_replete(t_philo *philo);
 int			ft_check_atoi(const char *s, int sign);
 int			ft_check_int_min(const char *s);
 

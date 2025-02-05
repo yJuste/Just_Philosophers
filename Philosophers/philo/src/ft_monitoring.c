@@ -29,6 +29,8 @@ void	*ft_monitor(void *data)
 		i = 0;
 		while (i < philo->table->nb_philo)
 		{
+			if (ft_check_replete(philo) == 1)
+				return (NULL);
 			if (ft_check_last_meal(&philo[i]))
 			{
 				pthread_mutex_lock(&table->write);

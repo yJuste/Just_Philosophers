@@ -14,6 +14,7 @@
 // -----------------------PROTOTYPE-------------------------
 int			ft_check_death(t_philo *philo);
 int			ft_check_last_meal(t_philo *philo);
+int			ft_check_replete(t_philo *philo);
 int			ft_check_atoi(const char *s, int sign);
 int			ft_check_int_min(const char *s);
 // ---------------------------------------------------------
@@ -40,6 +41,18 @@ int	ft_check_last_meal(t_philo *philo)
 		return (1);
 	}
 	pthread_mutex_unlock(&philo->time);
+	return (0);
+}
+
+int	ft_check_replete(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->table->replete);
+	if (philo->table->full == philo->table->nb_philo)
+	{
+		pthread_mutex_unlock(&philo->table->replete);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->table->replete);
 	return (0);
 }
 

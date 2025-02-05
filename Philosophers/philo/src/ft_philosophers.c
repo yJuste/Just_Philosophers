@@ -47,6 +47,7 @@ void	ft_end_simulation(t_table *table)
 	}
 	pthread_mutex_destroy(&table->info);
 	pthread_mutex_destroy(&table->write);
+	pthread_mutex_destroy(&table->replete);
 	free(table->philo);
 	free(table->fork);
 	free(table);
