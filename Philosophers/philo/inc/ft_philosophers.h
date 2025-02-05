@@ -106,7 +106,6 @@ void		ft_end_simulation(t_table *table);
 // ft_routine.c
 
 void		*ft_routine(void *data);
-void		*ft_routine_alone(void *data);
 void		ft_i_am_replete(t_table *table);
 
 // ft_actions.c

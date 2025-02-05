@@ -13,7 +13,6 @@
 
 // -----------------------PROTOTYPE-------------------------
 void		*ft_routine(void *data);
-void		*ft_routine_alone(void *data);
 void		ft_i_am_replete(t_table *table);
 // ---------------------------------------------------------
 
