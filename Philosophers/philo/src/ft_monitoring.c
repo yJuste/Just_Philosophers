@@ -27,10 +27,10 @@ void	*ft_monitor(void *data)
 	while (1)
 	{
 		i = 0;
+		if (ft_check_replete(philo) == 1)
+			return (NULL);
 		while (i < philo->table->nb_philo)
 		{
-			if (ft_check_replete(philo) == 1)
-				return (NULL);
 			if (ft_check_last_meal(&philo[i]))
 			{
 				pthread_mutex_lock(&table->write);

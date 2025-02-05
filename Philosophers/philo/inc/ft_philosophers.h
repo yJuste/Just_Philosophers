@@ -95,7 +95,7 @@ int			main(int argc, char **argv);
 // ft_parsing.c
 
 int			ft_init(t_table **table, char **argv);
-int			ft_parse(t_table *table, char **argv);
+int			ft_parse(t_table *table, char **argv, int i);
 void		ft_init_philosophers(t_table *table);
 
 // ft_philosophers.c
@@ -106,10 +106,14 @@ void		ft_end_simulation(t_table *table);
 // ft_routine.c
 
 void		*ft_routine(void *data);
+void		*ft_routine_alone(void *data);
+void		ft_i_am_replete(t_table *table);
+
+// ft_actions.c
+
 void		ft_eat(t_philo *philo);
 void		ft_sleep(t_philo *philo);
 void		ft_think(t_philo *philo);
-void		ft_i_am_replete(t_table *table);
 
 // ft_monitoring.c
 

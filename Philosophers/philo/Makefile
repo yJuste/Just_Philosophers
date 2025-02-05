@@ -13,6 +13,7 @@ SRC =	main.c			\
 	ft_parsing.c		\
 	ft_philosophers.c	\
 	ft_routine.c		\
+	ft_actions.c		\
 	ft_monitoring.c		\
 	ft_check.c		\
 	ft_utils.c		\

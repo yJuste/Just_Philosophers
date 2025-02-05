@@ -13,9 +13,7 @@
 
 // -----------------------PROTOTYPE-------------------------
 void		*ft_routine(void *data);
-void		ft_eat(t_philo *philo);
-void		ft_sleep(t_philo *philo);
-void		ft_think(t_philo *philo);
+void		*ft_routine_alone(void *data);
 void		ft_i_am_replete(t_table *table);
 // ---------------------------------------------------------
 
@@ -41,32 +39,6 @@ void	*ft_routine(void *data)
 	}
 	ft_i_am_replete(table);
 	return (NULL);
-}
-
-void	ft_eat(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->left_fork->fork);
-	ft_write(philo, LEFT_FORK);
-	pthread_mutex_lock(&philo->right_fork->fork);
-	ft_write(philo, RIGHT_FORK);
-	ft_write(philo, EAT);
-	pthread_mutex_lock(&philo->time);
-	philo->last_meal = ft_gettimeofday() - philo->table->start_simulation;
-	pthread_mutex_unlock(&philo->time);
-	ft_usleep(philo->table->time_to_eat);
-	pthread_mutex_unlock(&philo->right_fork->fork);
-	pthread_mutex_unlock(&philo->left_fork->fork);
-}
-
-void	ft_sleep(t_philo *philo)
-{
-	ft_write(philo, SLEEP);
-	ft_usleep(philo->table->time_to_sleep);
-}
-
-void	ft_think(t_philo *philo)
-{
-	ft_write(philo, THINK);
 }
 
 void	ft_i_am_replete(t_table *table)

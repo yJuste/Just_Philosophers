@@ -13,7 +13,7 @@
 
 // -----------------------PROTOTYPE-------------------------
 int			ft_init(t_table **table, char **argv);
-int			ft_parse(t_table *table, char **argv);
+int			ft_parse(t_table *table, char **argv, int i);
 void		ft_init_philosophers(t_table *table);
 // ---------------------------------------------------------
 
@@ -23,7 +23,7 @@ int	ft_init(t_table **table, char **argv)
 
 	i = 0;
 	(*table) = ft_calloc(1, sizeof(t_table));
-	if (ft_parse(*table, argv) == 1)
+	if (ft_parse(*table, argv, 0) == 1)
 		return (free(*table), 1);
 	(*table)->philo = ft_calloc((*table)->nb_philo, sizeof(t_philo));
 	(*table)->fork = ft_calloc((*table)->nb_philo, sizeof(t_fork));
@@ -37,10 +37,8 @@ int	ft_init(t_table **table, char **argv)
 	return (0);
 }
 
-int	ft_parse(t_table *table, char **argv)
+int	ft_parse(t_table *table, char **argv, int i)
 {
-	int		i;
-
 	i = 1;
 	while (i < 5)
 		if (ft_check_atoi(argv[i++], 1) == 1)
@@ -62,6 +60,9 @@ int	ft_parse(t_table *table, char **argv)
 			return (ft_putstr_fd("Error\nNegative number.\n", 2), 1);
 		table->max_meals = ft_atoi(argv[5]);
 	}
+	if (table->nb_philo == 1
+		&& (table->max_meals > 1 || table->max_meals == -1))
+		table->max_meals = 1;
 	return (0);
 }
 
