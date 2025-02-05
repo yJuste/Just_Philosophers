@@ -6,16 +6,19 @@
 /*   By:                                            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created:   by Just'                               #+#    #+#             */
-/*   Updated: 2025/02/04 18:07:27 by jlongin          ###   ########.fr       */
+/*   Updated:   by Just'                              ###   ########.fr       */
 /*                                                                            */
+/* ************************************************************************** */
+/*   • Débute et finit la simulation.                                         */
 /* ************************************************************************** */
 #include "ft_philosophers.h"
 
-// -----------------------PROTOTYPE-------------------------
+// --------------------PROTOTYPE-----------------------
 void		ft_create_philosophers(t_table *table);
 void		ft_end_simulation(t_table *table);
-// ---------------------------------------------------------
+// ----------------------------------------------------
 
+// Démarre la routine des philosophes et du moniteur.
 void	ft_create_philosophers(t_table *table)
 {
 	int		i;
@@ -30,6 +33,8 @@ void	ft_create_philosophers(t_table *table)
 	}
 }
 
+// 1. Met un terme à la simulation.
+// 2. Free, destroy les mutex.
 void	ft_end_simulation(t_table *table)
 {
 	int		i;

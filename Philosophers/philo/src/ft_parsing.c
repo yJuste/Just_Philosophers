@@ -6,17 +6,21 @@
 /*   By:                                            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created:   by Just'                               #+#    #+#             */
-/*   Updated: 2025/02/04 18:00:58 by jlongin          ###   ########.fr       */
+/*   Updated:   by Just'                              ###   ########.fr       */
 /*                                                                            */
+/* ************************************************************************** */
+/*   • Analyse des nombres passés en argument.                                */
 /* ************************************************************************** */
 #include "ft_philosophers.h"
 
-// -----------------------PROTOTYPE-------------------------
+// ----------------------------PROTOTYPE-----------------------------
 int			ft_init(t_table **table, char **argv);
 int			ft_parse(t_table *table, char **argv, int i);
 void		ft_init_philosophers(t_table *table);
-// ---------------------------------------------------------
+// ------------------------------------------------------------------
 
+// 1. Initialise tous à 0 (aussi les mutex).
+// 2. Alloue de la mémoire pour les philos, fourchettes.
 int	ft_init(t_table **table, char **argv)
 {
 	int		i;
@@ -37,6 +41,7 @@ int	ft_init(t_table **table, char **argv)
 	return (0);
 }
 
+// Analyse la map, check atoi strict.
 int	ft_parse(t_table *table, char **argv, int i)
 {
 	i = 1;
@@ -66,6 +71,8 @@ int	ft_parse(t_table *table, char **argv, int i)
 	return (0);
 }
 
+// 1. Donne les valeurs par défaut pour chaque philosophe.
+// 2. Lui assigne les fourchettes.
 void	ft_init_philosophers(t_table *table)
 {
 	int		i;

@@ -6,15 +6,19 @@
 /*   By:                                            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created:   by Just'                               #+#    #+#             */
-/*   Updated: 2025/02/04 18:23:43 by jlongin          ###   ########.fr       */
+/*   Updated:   by Just'                              ###   ########.fr       */
 /*                                                                            */
+/* ************************************************************************** */
+/*   • Contrôle le déroulement de la simulation.                              */
 /* ************************************************************************** */
 #include "ft_philosophers.h"
 
-// -----------------------PROTOTYPE-------------------------
+// --------------------PROTOTYPE----------------------
 void		*ft_monitor(void *data);
-// ---------------------------------------------------------
+void		ft_philo_died(t_table *table, int id);
+// ---------------------------------------------------
 
+// surveille les philosophers et gère les cas de mort et de repas pris.
 void	*ft_monitor(void *data)
 {
 	int			i;
@@ -33,14 +37,7 @@ void	*ft_monitor(void *data)
 		{
 			if (ft_check_last_meal(&philo[i]))
 			{
-				pthread_mutex_lock(&table->write);
-				pthread_mutex_lock(&table->info);
-				table->end_simulation = 1;
-				pthread_mutex_unlock(&table->info);
-				printf("%ld %d died\n",
-					ft_gettimeofday() - table->start_simulation,
-					philo->id);
-				pthread_mutex_unlock(&table->write);
+				ft_philo_died(table, philo->id);
 				return (NULL);
 			}
 			i++;
@@ -48,4 +45,17 @@ void	*ft_monitor(void *data)
 		ft_usleep(1);
 	}
 	return (NULL);
+}
+
+// met fin à toute exécution et affiche le temps de sa mort.
+void	ft_philo_died(t_table *table, int id)
+{
+	pthread_mutex_lock(&table->write);
+	pthread_mutex_lock(&table->info);
+	table->end_simulation = 1;
+	pthread_mutex_unlock(&table->info);
+	printf("%ld %d died\n",
+		ft_gettimeofday() - table->start_simulation,
+		id);
+	pthread_mutex_unlock(&table->write);
 }

@@ -6,8 +6,16 @@
 /*   By:                                            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created:   by Just'                               #+#    #+#             */
-/*   Updated: 2025/02/04 17:36:00 by jlongin          ###   ########.fr       */
+/*   Updated:   by Just'                              ###   ########.fr       */
 /*                                                                            */
+/* ************************************************************************** */
+/*   • Résoud le dîner des philosophes.                                       */
+/*   • ./philo [ nb_hilo ] [ die ] [ eat ] [ sleep ] ([ max_meals ])          */
+/*      -> nb_philo  - number_of_philosophers                                 */
+/*      -> die       - time_to_die                                 [ in ms ]  */
+/*      -> eat       - time_to_eat                                 [ in ms ]  */
+/*      -> sleep     - time_to_sleep                               [ in ms ]  */
+/*      -> max_meals - number_of_times_each_philosopher_must_eat              */
 /* ************************************************************************** */
 #include "ft_philosophers.h"
 

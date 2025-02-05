@@ -13,12 +13,12 @@
 /* ************************************************************************** */
 #include "ft_philosophers.h"
 
-// -----------------------PROTOTYPE-------------------------
+// --------------------------------PROTOTYPE---------------------------------
 int			ft_atoi(const char *s);
 void		*ft_calloc(size_t count, size_t size);
 void		ft_putstr_fd(char *s, int fd);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
-// ---------------------------------------------------------
+// --------------------------------------------------------------------------
 
 int	ft_atoi(const char *s)
 {

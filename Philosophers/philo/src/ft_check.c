@@ -9,16 +9,19 @@
 /*   Updated:   by Just'                              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+/*   • Fonctions de check.                                                    */
+/* ************************************************************************** */
 #include "ft_philosophers.h"
 
-// -----------------------PROTOTYPE-------------------------
+// -------------------------PROTOTYPE--------------------------
 int			ft_check_death(t_philo *philo);
 int			ft_check_last_meal(t_philo *philo);
 int			ft_check_replete(t_philo *philo);
 int			ft_check_atoi(const char *s, int sign);
 int			ft_check_int_min(const char *s);
-// ---------------------------------------------------------
+// ------------------------------------------------------------
 
+// Fonction qui check la mort d'un philosophe.
 int	ft_check_death(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->table->info);
@@ -31,6 +34,7 @@ int	ft_check_death(t_philo *philo)
 	return (0);
 }
 
+// Fonction qui check la dernière fois qu'un philosophe prend sont repas.
 int	ft_check_last_meal(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->time);
@@ -44,6 +48,7 @@ int	ft_check_last_meal(t_philo *philo)
 	return (0);
 }
 
+// Fonction qui check si un philosophe est repu.
 int	ft_check_replete(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->table->replete);
@@ -56,6 +61,7 @@ int	ft_check_replete(t_philo *philo)
 	return (0);
 }
 
+// Fonction qui check atoi (sans exit());
 int	ft_check_atoi(const char *s, int sign)
 {
 	long		res;
