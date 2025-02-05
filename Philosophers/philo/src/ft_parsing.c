@@ -25,7 +25,6 @@ int	ft_init(t_table **table, char **argv)
 {
 	int		i;
 
-	i = 0;
 	(*table) = ft_calloc(1, sizeof(t_table));
 	if (ft_parse(*table, argv, 0) == 1)
 		return (free(*table), 1);
@@ -34,8 +33,12 @@ int	ft_init(t_table **table, char **argv)
 	pthread_mutex_init(&(*table)->info, NULL);
 	pthread_mutex_init(&(*table)->write, NULL);
 	pthread_mutex_init(&(*table)->replete, NULL);
+	i = 0;
 	while (i < (*table)->nb_philo)
 		pthread_mutex_init(&(*table)->fork[i++].fork, NULL);
+	i = -1;
+	while (++i < (*table)->nb_philo)
+		(*table)->fork[i].id = i;
 	(*table)->start_simulation = ft_gettimeofday();
 	ft_init_philosophers(*table);
 	return (0);
