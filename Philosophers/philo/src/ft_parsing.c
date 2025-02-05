@@ -51,7 +51,7 @@ int	ft_parse(t_table *table, char **argv, int i)
 	i = 1;
 	while (i < 5)
 		if (ft_atoi(argv[i++]) <= 0)
-			return (ft_putstr_fd("Error\nNegative number.\n", 2), 1);
+			return (ft_putstr_fd("Error\nZero or Negative number.\n", 2), 1);
 	table->nb_philo = ft_atoi(argv[1]);
 	table->time_to_die = ft_atoi(argv[2]);
 	table->time_to_eat = ft_atoi(argv[3]);

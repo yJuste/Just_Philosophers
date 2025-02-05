@@ -53,9 +53,6 @@ void	ft_eat(t_philo *philo)
 	ft_write(philo, LEFT_FORK);
 	if (philo->table->nb_philo == 1)
 	{
-		pthread_mutex_lock(&philo->time);
-		philo->last_meal = ft_gettimeofday() - philo->table->start_simulation;
-		pthread_mutex_unlock(&philo->time);
 		ft_usleep(philo->table->time_to_die);
 		ft_write(philo, DIE);
 		pthread_mutex_unlock(&philo->left_fork->fork);
