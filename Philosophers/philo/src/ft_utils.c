@@ -19,7 +19,7 @@ void		ft_usleep(long ms);
 void		ft_write(t_philo *philo, t_actions action);
 // --------------------------------------------------------
 
-// Calcule le temps actuelle en milliseconde.
+// Calcule le temps actuel en milliseconde.
 long	ft_gettimeofday(void)
 {
 	long			time;
@@ -30,8 +30,7 @@ long	ft_gettimeofday(void)
 	return (time);
 }
 
-// Usleep amélioré qui attent vraiment le temps nécessaire par rapport
-// à gettimeofday.
+// Usleep amélioré qui attent vraiment le temps nécessaire grâce à gettimeofday.
 void	ft_usleep(long ms)
 {
 	long		start_time;
@@ -41,7 +40,7 @@ void	ft_usleep(long ms)
 		usleep(50);
 }
 
-// Écrit le status des philosophes.
+// Écrit le statut des philosophes.
 void	ft_write(t_philo *philo, t_actions action)
 {
 	long		elapsed;

@@ -21,7 +21,7 @@ void		ft_think(t_philo *philo);
 void		ft_i_am_replete(t_table *table);
 // ---------------------------------------------
 
-// Chaque philosophe vie la routine, manger, dormir, penser.
+// Chaque philosophe vie sa routine, manger, dormir, penser.
 void	*ft_routine(void *data)
 {
 	int			meals_taken;

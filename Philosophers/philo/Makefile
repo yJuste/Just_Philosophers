@@ -1,7 +1,7 @@
 NAME = philo
 
 CC = cc
-CFLAGS = -g # -Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra -Werror
 FLAGS = # -pthread
 IFLAGS = -I $(INC_DIR)
 

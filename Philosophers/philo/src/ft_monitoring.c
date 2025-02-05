@@ -18,7 +18,7 @@ void		*ft_monitor(void *data);
 void		ft_philo_died(t_table *table, int id);
 // ---------------------------------------------------
 
-// surveille les philosophers et gère les cas de mort et de repas pris.
+// Surveille les philosophers et gère le cas de mort et de repas pris.
 void	*ft_monitor(void *data)
 {
 	int			i;
@@ -47,7 +47,7 @@ void	*ft_monitor(void *data)
 	return (NULL);
 }
 
-// met fin à toute exécution et affiche le temps de sa mort.
+// Met fin à toute exécution et affiche le temps de sa mort.
 void	ft_philo_died(t_table *table, int id)
 {
 	pthread_mutex_lock(&table->write);
