@@ -42,7 +42,6 @@ void	*ft_monitor(void *data)
 			}
 			i++;
 		}
-		ft_usleep(1);
 	}
 	return (NULL);
 }
