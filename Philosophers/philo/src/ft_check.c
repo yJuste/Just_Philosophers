@@ -21,7 +21,7 @@ int			ft_check_atoi(const char *s, int sign);
 int			ft_check_int_min(const char *s);
 // ------------------------------------------------------------
 
-// Fonction qui check la mort d'un philosophe.
+// Fonction qui check la mort du philosophe.
 int	ft_check_death(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->table->info);
@@ -34,7 +34,7 @@ int	ft_check_death(t_philo *philo)
 	return (0);
 }
 
-// Fonction qui check la dernière fois qu'un philosophe prend sont repas.
+// Fonction qui check la dernière fois que le philosophe prend sont repas.
 int	ft_check_last_meal(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->time);
@@ -48,7 +48,7 @@ int	ft_check_last_meal(t_philo *philo)
 	return (0);
 }
 
-// Fonction qui check si un philosophe est repu.
+// Fonction qui check si le philosophe est repu.
 int	ft_check_replete(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->table->replete);

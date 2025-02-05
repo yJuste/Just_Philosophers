@@ -20,7 +20,7 @@ void		ft_init_philosophers(t_table *table);
 // ------------------------------------------------------------------
 
 // 1. Initialise tous à 0 (aussi les mutex).
-// 2. Alloue de la mémoire pour les philos, fourchettes.
+// 2. Alloue de la mémoire pour les philosophes & les fourchettes.
 int	ft_init(t_table **table, char **argv)
 {
 	int		i;

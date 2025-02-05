@@ -40,7 +40,7 @@ void	ft_usleep(long ms)
 		usleep(50);
 }
 
-// Écrit le statut des philosophes.
+// Écrit le statut du philosophe.
 void	ft_write(t_philo *philo, t_actions action)
 {
 	long		elapsed;
