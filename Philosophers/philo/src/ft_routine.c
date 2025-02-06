@@ -36,7 +36,7 @@ void	*ft_routine(void *data)
 	while (!ft_check_death(philo))
 	{
 		ft_eat(philo);
-		if (meals_taken != -1 && meals_taken == table->max_meals - 1)
+		if (meals_taken == table->max_meals - 1)
 			break ;
 		ft_sleep(philo);
 		ft_think(philo);

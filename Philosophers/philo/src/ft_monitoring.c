@@ -25,7 +25,6 @@ void	*ft_monitor(void *data)
 	t_table		*table;
 	t_philo		*philo;
 
-	i = 0;
 	table = (t_table *)data;
 	philo = table->philo;
 	while (1)

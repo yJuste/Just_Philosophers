@@ -1,8 +1,7 @@
 NAME = philo
 
 CC = cc
-CFLAGS = -g -Wall -Wextra -Werror
-FLAGS = # -pthread
+CFLAGS = -Wall -Wextra -Werror
 IFLAGS = -I $(INC_DIR)
 
 SRC_DIR = src
@@ -33,8 +32,6 @@ $(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) $(IFLAGS) $(OBJ) -o $(NAME)
 	@echo $(GREEN)"--- EXECUTABLE ./$(NAME) is ready ---`make help`"$(RESET)
 
-# -c $<		prend la sous-regle .c
-# -o $@		genere les .o
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
