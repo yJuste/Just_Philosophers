@@ -47,7 +47,6 @@ typedef struct s_table
 	int			time_to_sleep;
 	int			max_meals;
 	int			full;
-	int			satisfied;
 	int			end_simulation;
 	long		start_simulation;
 	pthread_t	monitor;
