@@ -42,7 +42,8 @@ void	ft_usleep(long ms)
 		usleep(50);
 }
 
-// Usleep seulement pour eat qui check pendant le repas si un philospher a finit.
+// Usleep seulement pour eat qui check pendant le repas si un philospher
+// a finit son quota de repas.
 void	ft_usleep_max_meals(long ms, t_philo *philo, int *max_meals, int *flg)
 {
 	long		start_time;
