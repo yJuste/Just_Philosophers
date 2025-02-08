@@ -47,6 +47,7 @@ typedef struct s_table
 	int			time_to_sleep;
 	int			max_meals;
 	int			full;
+	int			satisfied;
 	int			end_simulation;
 	long		start_simulation;
 	pthread_t	monitor;
@@ -106,10 +107,10 @@ void		ft_end_simulation(t_table *table);
 // ft_routine.c
 
 void		*ft_routine(void *data);
-void		ft_eat(t_philo *philo);
+int			ft_eat(t_philo *philo, int *max_meals, int *flg);
 void		ft_sleep(t_philo *philo);
 void		ft_think(t_philo *philo);
-void		ft_i_am_replete(t_table *table);
+void		ft_i_am_replete(t_philo *philo);
 
 // ft_monitoring.c
 
@@ -128,6 +129,8 @@ int			ft_check_int_min(const char *s);
 
 long		ft_gettimeofday(void);
 void		ft_usleep(long ms);
+void		ft_usleep_max_meals(long ms, t_philo *philo,
+				int *max_meals, int *flg);
 void		ft_write(t_philo *philo, t_actions action);
 
 // ft_lib.c

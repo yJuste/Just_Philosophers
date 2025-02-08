@@ -68,9 +68,6 @@ int	ft_parse(t_table *table, char **argv, int i)
 			return (ft_putstr_fd("Error\nNegative number.\n", 2), 1);
 		table->max_meals = ft_atoi(argv[5]);
 	}
-	if (table->nb_philo == 1
-		&& (table->max_meals > 1 || table->max_meals == -1))
-		table->max_meals = 1;
 	return (0);
 }
 

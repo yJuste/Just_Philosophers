@@ -16,6 +16,8 @@
 // ----------------------PROTOTYPE-------------------------
 long		ft_gettimeofday(void);
 void		ft_usleep(long ms);
+void		ft_usleep_max_meals(long ms, t_philo *philo,
+				int *max_meals, int *flg);
 void		ft_write(t_philo *philo, t_actions action);
 // --------------------------------------------------------
 
@@ -36,6 +38,21 @@ void	ft_usleep(long ms)
 	long		start_time;
 
 	start_time = ft_gettimeofday();
+	while (ft_gettimeofday() - start_time < ms)
+		usleep(50);
+}
+
+void	ft_usleep_max_meals(long ms, t_philo *philo, int *max_meals, int *flg)
+{
+	long		start_time;
+
+	start_time = ft_gettimeofday();
+	usleep(50);
+	if (*max_meals == philo->table->max_meals && *flg == 0)
+	{
+		ft_i_am_replete(philo);
+		*flg = 1;
+	}
 	while (ft_gettimeofday() - start_time < ms)
 		usleep(50);
 }
