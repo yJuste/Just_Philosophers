@@ -29,8 +29,8 @@ void	*ft_routine(void *data)
 	t_table		*table;
 	t_philo		*philo;
 
-	max_meals = 0;
 	flg = 0;
+	max_meals = 0;
 	philo = (t_philo *)data;
 	table = philo->table;
 	if (table->max_meals == 0)
@@ -39,9 +39,10 @@ void	*ft_routine(void *data)
 	{
 		ft_think(philo);
 		if (ft_eat(philo, &max_meals, &flg) == 1)
-			return (ft_i_am_replete(philo), NULL);
+			break ;
 		ft_sleep(philo);
 	}
+	ft_i_am_replete(philo);
 	return (NULL);
 }
 

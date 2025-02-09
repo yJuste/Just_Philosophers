@@ -30,8 +30,6 @@ void	*ft_monitor(void *data)
 	while (1)
 	{
 		i = 0;
-		if (ft_check_replete(philo) == 1)
-			return (NULL);
 		while (i < philo->table->nb_philo)
 		{
 			if (ft_check_last_meal(&philo[i]))
@@ -41,6 +39,8 @@ void	*ft_monitor(void *data)
 			}
 			i++;
 		}
+		if (ft_check_replete(philo) == 1)
+			return (NULL);
 	}
 	return (NULL);
 }

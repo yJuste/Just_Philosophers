@@ -49,14 +49,15 @@ void	ft_usleep_max_meals(long ms, t_philo *philo, int *max_meals, int *flg)
 	long		start_time;
 
 	start_time = ft_gettimeofday();
-	usleep(50);
-	if (*max_meals == philo->table->max_meals && *flg == 0)
-	{
-		ft_i_am_replete(philo);
-		*flg = 1;
-	}
 	while (ft_gettimeofday() - start_time < ms)
+	{
 		usleep(50);
+		if (*max_meals == philo->table->max_meals && *flg == 0)
+		{
+			ft_i_am_replete(philo);
+			*flg = 1;
+		}
+	}
 }
 
 // Écrit le statut du philosophe.
