@@ -9,6 +9,14 @@
 /*   Updated:   by Just'                              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+/*   • Résoud le dîner des philosophes.                                       */
+/*   • ./philo [ nb_hilo ] [ die ] [ eat ] [ sleep ] ([ max_meals ])          */
+/*      -> nb_philo  - number_of_philosophers                                 */
+/*      -> die       - time_to_die                                 [ in ms ]  */
+/*      -> eat       - time_to_eat                                 [ in ms ]  */
+/*      -> sleep     - time_to_sleep                               [ in ms ]  */
+/*      -> max_meals - number_of_times_each_philosopher_must_eat              */
+/* ************************************************************************** */
 #ifndef FT_PHILOSOPHERS_H
 # define FT_PHILOSOPHERS_H
 
@@ -21,15 +29,22 @@
 // thread
 # include <pthread.h>
 
+// semaphore
+# include <semaphore.h>
+
 // gettimeofday
 # include <sys/time.h>
 
+// Defines Semaphore
+
+# define SEM_EAT "sem_eat"
+# define SEM_FORKS "sem_forks"
+# define SEM_WRITE "sem_write"
+
 // Structures
 
-typedef pthread_mutex_t		t_mtx;
 typedef struct s_table		t_table;
 typedef struct s_philo		t_philo;
-typedef struct s_fork		t_fork;
 
 typedef struct s_table
 {
@@ -38,28 +53,32 @@ typedef struct s_table
 	int			time_to_eat;
 	int			time_to_sleep;
 	int			max_meals;
-	int			full;
 	int			end_simulation;
 	long		start_simulation;
-	pthread_t	monitor;
-	t_fork		*fork;
+	sem_t		*forks;
+	sem_t		*write;
 	t_philo		*philo;
 }	t_table;
 
 typedef struct s_philo
 {
 	int			id;
-	pthread_t	id_thread;
 	long		last_meal;
-	t_fork		*left_fork;
-	t_fork		*right_fork;
+	sem_t		*sem_eat;
 	t_table		*table;
 }	t_philo;
 
-typedef struct s_fork
+// Enum
+
+typedef enum e_actions
 {
-	int			id;
-}	t_fork;
+	LEFT_FORK,
+	RIGHT_FORK,
+	EAT,
+	SLEEP,
+	THINK,
+	DIE
+}	t_actions;
 
 //	---------- MY CODE ----------
 

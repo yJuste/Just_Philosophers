@@ -54,7 +54,7 @@ s:
 
 help:
 	@echo $(GREEN)
-	@head -n 11 $(INC_DIR)/ft_philosophers.h
+	@head -n 19 $(INC_DIR)/ft_philosophers.h
 	@echo $(RESET)
 
 norm:

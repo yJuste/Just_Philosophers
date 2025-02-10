@@ -23,17 +23,14 @@ void		ft_init_philosophers(t_table *table);
 // 2. Alloue de la mémoire pour les philosophes & les fourchettes.
 int	ft_init(t_table **table, char **argv)
 {
-	int		i;
-
 	(*table) = ft_calloc(1, sizeof(t_table));
 	if (ft_parse(*table, argv, 0) == 1)
 		return (free(*table), 1);
 	(*table)->philo = ft_calloc((*table)->nb_philo, sizeof(t_philo));
-	(*table)->fork = ft_calloc((*table)->nb_philo, sizeof(t_fork));
-	i = -1;
-	while (++i < (*table)->nb_philo)
-		(*table)->fork[i].id = i;
-	(*table)->start_simulation = ft_gettimeofday();
+	sem_unlink(SEM_FORKS);
+	sem_unlink(SEM_WRITE);
+	(*table)->forks = sem_open(SEM_FORKS, O_CREAT, 0, (*table)->nb_philo);
+	(*table)->write = sem_open(SEM_WRITE, O_CREAT, 0, 1);
 	ft_init_philosophers(*table);
 	return (0);
 }
@@ -73,17 +70,13 @@ void	ft_init_philosophers(t_table *table)
 	t_philo	*philo;
 
 	i = 0;
+	sem_unlink(SEM_EAT);
 	while (i < table->nb_philo)
 	{
 		philo = &table->philo[i];
 		philo->id = i + 1;
-		philo->last_meal = table->start_simulation;
-		philo->left_fork = &table->fork[(i + 1) % table->nb_philo];
-		philo->right_fork = &table->fork[i % table->nb_philo];
-		if (philo->id % 2 == 0)
-			philo->left_fork = &table->fork[i % table->nb_philo];
-		if (philo->id % 2 == 0)
-			philo->right_fork = &table->fork[(i + 1) % table->nb_philo];
+		philo->last_meal = 0;
+		philo->sem_eat = sem_open(SEM_EAT, O_CREAT, 0, 1);
 		philo->table = table;
 		i++;
 	}
