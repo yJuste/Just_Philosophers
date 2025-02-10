@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_routine.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By:                                            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,25 +9,21 @@
 /*   Updated:   by Just'                              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-/*   • Résoud le dîner des philosophes.                                       */
-/*   • ./philo [ nb_hilo ] [ die ] [ eat ] [ sleep ] ([ max_meals ])          */
-/*      -> nb_philo  - number_of_philosophers                                 */
-/*      -> die       - time_to_die                                 [ in ms ]  */
-/*      -> eat       - time_to_eat                                 [ in ms ]  */
-/*      -> sleep     - time_to_sleep                               [ in ms ]  */
-/*      -> max_meals - number_of_times_each_philosopher_must_eat              */
+/*   • Lancement de la simulation.                                            */
 /* ************************************************************************** */
 #include "ft_philosophers.h"
 
-int	main(int argc, char **argv)
+// -----------------------------PROTOTYPE--------------------------------
+void		*ft_routine(void *data);
+// ----------------------------------------------------------------------
+
+// Chaque philosophe vie sa routine, manger, dormir, penser.
+void	*ft_routine(void *data)
 {
 	t_table		*table;
+	t_philo		*philo;
 
-	if (argc != 5 && argc != 6)
-		return (ft_putstr_fd("Too few/many arguments.\n", 2), 1);
-	if (ft_init(&table, argv) == 1)
-		return (1);
-	ft_create_philosophers(table);
-	ft_end_simulation(table);
-	return (0);
+	philo = (t_philo *)data;
+	table = philo->table;
+	return (NULL);
 }

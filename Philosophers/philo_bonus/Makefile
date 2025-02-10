@@ -8,7 +8,14 @@ SRC_DIR = src
 INC_DIR = inc
 OBJ_DIR = obj
 
-SRC =	main.c
+SRC =	main.c			\
+	ft_parsing.c		\
+	ft_philosophers.c	\
+	ft_monitoring.c		\
+	ft_routine.c		\
+	ft_check.c		\
+	ft_utils.c		\
+	ft_lib.c
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(notdir $(basename $(SRC)))))
 
