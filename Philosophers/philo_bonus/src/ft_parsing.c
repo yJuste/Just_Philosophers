@@ -32,10 +32,12 @@ int	ft_init(t_table **table, char **argv)
 	sem_unlink("sem_info");
 	sem_unlink("sem_write");
 	sem_unlink("sem_replete");
+	sem_unlink("sem_time");
 	(*table)->forks = sem_open("forks", O_CREAT, 0, (*table)->nb_philo);
 	(*table)->sem_info = sem_open("sem_info", O_CREAT, 0, 1);
 	(*table)->sem_write = sem_open("sem_write", O_CREAT, 0, 1);
 	(*table)->sem_replete = sem_open("sem_replete", O_CREAT, 0, 1);
+	(*table)->sem_time = sem_open("sem_time", O_CREAT, 0, 1);
 	ft_init_philosophers(*table);
 	(*table)->start_simulation = ft_gettimeofday();
 	return (0);
@@ -75,14 +77,12 @@ void	ft_init_philosophers(t_table *table)
 	t_philo	*philo;
 
 	i = 0;
-	sem_unlink("sem_time");
 	while (i < table->nb_philo)
 	{
 		philo = &table->philo[i];
 		philo->id = i + 1;
 		philo->last_meal = 0;
 		philo->monitor = 0;
-		philo->sem_time = sem_open("sem_time", O_CREAT, 0, 1);
 		philo->table = table;
 		i++;
 	}

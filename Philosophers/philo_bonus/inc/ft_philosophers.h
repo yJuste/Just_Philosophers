@@ -52,6 +52,7 @@ typedef struct s_table
 	sem_t		*sem_info;
 	sem_t		*sem_write;
 	sem_t		*sem_replete;
+	sem_t		*sem_time;
 	t_philo		*philo;
 }	t_table;
 
@@ -60,7 +61,6 @@ typedef struct s_philo
 	int			id;
 	long		last_meal;
 	pthread_t	monitor;
-	sem_t		*sem_time;
 	t_table		*table;
 }	t_philo;
 
@@ -108,7 +108,7 @@ void		ft_i_am_replete(t_philo *philo);
 long		ft_gettimeofday(void);
 void		ft_usleep(long ms);
 void		ft_usleep_max_meals(long ms, t_philo *philo,
-			int *max_meals, int *flg);
+				int *max_meals, int *flg);
 void		ft_write(t_philo *philo, t_actions action);
 
 // ft_check.c

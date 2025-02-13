@@ -52,17 +52,13 @@ void	ft_end_simulation(t_table *table)
 	sem_close(table->forks);
 	sem_close(table->sem_info);
 	sem_close(table->sem_write);
-	i = -1;
-	while (++i < table->nb_philo)
-	{
-		sem_close(table->philo[i].sem_time);
-		sem_unlink("sem_time");
-	}
 	sem_close(table->sem_replete);
+	sem_close(table->sem_time);
 	sem_unlink("forks");
 	sem_unlink("sem_info");
 	sem_unlink("sem_write");
 	sem_unlink("sem_replete");
+	sem_unlink("sem_time");
 	free(table->philo);
 	free(table);
 }

@@ -54,9 +54,9 @@ int	ft_eat(t_philo *philo, int *max_meals, int *flg)
 	sem_wait(philo->table->forks);
 	ft_write(philo, RIGHT_FORK);
 	ft_write(philo, EAT);
-	sem_wait(philo->sem_time);
+	sem_wait(philo->table->sem_time);
 	philo->last_meal = ft_gettimeofday() - philo->table->start_simulation;
-	sem_post(philo->sem_time);
+	sem_post(philo->table->sem_time);
 	ft_usleep_max_meals(philo->table->time_to_eat, philo, max_meals, flg);
 	(*max_meals)++;
 	sem_post(philo->table->forks);

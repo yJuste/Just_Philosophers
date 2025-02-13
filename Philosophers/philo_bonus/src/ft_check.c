@@ -37,14 +37,14 @@ int	ft_check_death(t_philo *philo)
 // Fonction qui check la dernière fois que le philosophe prend sont repas.
 int	ft_check_last_meal(t_philo *philo)
 {
-	sem_wait(philo->sem_time);
+	sem_wait(philo->table->sem_time);
 	if (ft_gettimeofday() - philo->table->start_simulation
 		- philo->last_meal > philo->table->time_to_die)
 	{
-		sem_post(philo->sem_time);
+		sem_post(philo->table->sem_time);
 		return (1);
 	}
-	sem_post(philo->sem_time);
+	sem_post(philo->table->sem_time);
 	return (0);
 }
 

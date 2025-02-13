@@ -17,7 +17,7 @@
 long		ft_gettimeofday(void);
 void		ft_usleep(long ms);
 void		ft_usleep_max_meals(long ms, t_philo *philo,
-			int *max_meals, int *flg);
+				int *max_meals, int *flg);
 void		ft_write(t_philo *philo, t_actions action);
 // ---------------------------------------------------------
 
