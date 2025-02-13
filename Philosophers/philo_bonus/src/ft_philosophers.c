@@ -15,6 +15,7 @@
 
 // --------------------PROTOTYPE-----------------------
 void		ft_create_philosophers(t_table *table);
+void		ft_end(t_table *table);
 void		ft_end_simulation(t_table *table);
 // ----------------------------------------------------
 
@@ -34,6 +35,7 @@ void	ft_create_philosophers(t_table *table)
 				ft_monitor, &table->philo[i]);
 			ft_routine(&table->philo[i]);
 			pthread_join(table->philo[i].monitor, NULL);
+			ft_end_simulation(table);
 			return (exit(0));
 		}
 		i++;
@@ -42,23 +44,28 @@ void	ft_create_philosophers(t_table *table)
 
 // 1. Met un terme à la simulation.
 // 2. Free, destroy les mutex.
-void	ft_end_simulation(t_table *table)
+void	ft_end(t_table *table)
 {
 	int		i;
 
 	i = -1;
 	while (++i < table->nb_philo)
 		waitpid(-1, NULL, 0);
-	sem_close(table->forks);
-	sem_close(table->sem_info);
-	sem_close(table->sem_write);
-	sem_close(table->sem_replete);
-	sem_close(table->sem_time);
+	ft_end_simulation(table);
 	sem_unlink("forks");
 	sem_unlink("sem_info");
 	sem_unlink("sem_write");
 	sem_unlink("sem_replete");
 	sem_unlink("sem_time");
+}
+
+void	ft_end_simulation(t_table *table)
+{
+	sem_close(table->forks);
+	sem_close(table->sem_info);
+	sem_close(table->sem_write);
+	sem_close(table->sem_replete);
+	sem_close(table->sem_time);
 	free(table->philo);
 	free(table);
 }

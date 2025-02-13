@@ -18,14 +18,14 @@ void		*ft_monitor(void *data);
 void		ft_philo_died(t_table *table, int id);
 // ---------------------------------------------------
 
-// Surveille les philosophes et gère le cas de mort et de repas pris.
+// Surveille un philosopher et gère le cas de sa mort et de ses repas pris.
 void	*ft_monitor(void *data)
 {
-	t_table		*table;
 	t_philo		*philo;
+	t_table		*table;
 
-	table = (t_table *)data;
-	philo = table->philo;
+	philo = (t_philo *)data;
+	table = philo->table;
 	while (1)
 	{
 		if (ft_check_last_meal(philo))

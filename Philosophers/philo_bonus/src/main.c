@@ -28,6 +28,6 @@ int	main(int argc, char **argv)
 	if (ft_init(&table, argv) == 1)
 		return (1);
 	ft_create_philosophers(table);
-	ft_end_simulation(table);
+	ft_end(table);
 	return (0);
 }

@@ -91,6 +91,7 @@ void		ft_init_philosophers(t_table *table);
 // ft_philosophers.c
 
 void		ft_create_philosophers(t_table *table);
+void		ft_end(t_table *table);
 void		ft_end_simulation(t_table *table);
 
 // ft_monitoring.c
