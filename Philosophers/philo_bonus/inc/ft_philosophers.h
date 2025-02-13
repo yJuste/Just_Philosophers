@@ -26,20 +26,12 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-// thread
+// thread -- semaphore
 # include <pthread.h>
-
-// semaphore
 # include <semaphore.h>
 
 // gettimeofday
 # include <sys/time.h>
-
-// Defines Semaphore
-
-# define SEM_EAT "sem_eat"
-# define SEM_FORKS "sem_forks"
-# define SEM_WRITE "sem_write"
 
 // Structures
 
@@ -52,11 +44,14 @@ typedef struct s_table
 	int			time_to_die;
 	int			time_to_eat;
 	int			time_to_sleep;
+	int			full;
 	int			max_meals;
 	int			end_simulation;
 	long		start_simulation;
 	sem_t		*forks;
-	sem_t		*write;
+	sem_t		*sem_info;
+	sem_t		*sem_write;
+	sem_t		*sem_replete;
 	t_philo		*philo;
 }	t_table;
 
@@ -64,7 +59,8 @@ typedef struct s_philo
 {
 	int			id;
 	long		last_meal;
-	sem_t		*sem_eat;
+	pthread_t	monitor;
+	sem_t		*sem_time;
 	t_table		*table;
 }	t_philo;
 
@@ -100,18 +96,26 @@ void		ft_end_simulation(t_table *table);
 // ft_monitoring.c
 
 void		*ft_monitor(void *data);
+void		ft_philo_died(t_table *table, int id);
 
 // ft_routine.c
 
 void		*ft_routine(void *data);
+void		ft_i_am_replete(t_philo *philo);
 
 // ft_utils.c
 
 long		ft_gettimeofday(void);
 void		ft_usleep(long ms);
+void		ft_usleep_max_meals(long ms, t_philo *philo,
+			int *max_meals, int *flg);
+void		ft_write(t_philo *philo, t_actions action);
 
 // ft_check.c
 
+int			ft_check_death(t_philo *philo);
+int			ft_check_last_meal(t_philo *philo);
+int			ft_check_replete(t_philo *philo);
 int			ft_check_atoi(const char *s, int sign);
 int			ft_check_int_min(const char *s);
 

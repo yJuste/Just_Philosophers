@@ -21,8 +21,23 @@ void		ft_end_simulation(t_table *table);
 // Démarre la routine des philosophes et du moniteur.
 void	ft_create_philosophers(t_table *table)
 {
-	table->start_simulation = ft_gettimeofday();
-	return ;
+	int		i;
+	pid_t	pid;
+
+	i = 0;
+	while (i < table->nb_philo)
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			pthread_create(&table->philo[i].monitor, NULL,
+				ft_monitor, &table->philo[i]);
+			ft_routine(&table->philo[i]);
+			pthread_join(table->philo[i].monitor, NULL);
+			return (exit(0));
+		}
+		i++;
+	}
 }
 
 // 1. Met un terme à la simulation.
@@ -31,14 +46,23 @@ void	ft_end_simulation(t_table *table)
 {
 	int		i;
 
-	i = 0;
-	while (i < table->nb_philo)
-		sem_close(table->philo[i].sem_eat);
+	i = -1;
+	while (++i < table->nb_philo)
+		waitpid(-1, NULL, 0);
 	sem_close(table->forks);
-	sem_close(table->write);
-	sem_unlink(SEM_EAT);
-	sem_unlink(SEM_FORKS);
-	sem_unlink(SEM_WRITE);
+	sem_close(table->sem_info);
+	sem_close(table->sem_write);
+	i = -1;
+	while (++i < table->nb_philo)
+	{
+		sem_close(table->philo[i].sem_time);
+		sem_unlink("sem_time");
+	}
+	sem_close(table->sem_replete);
+	sem_unlink("forks");
+	sem_unlink("sem_info");
+	sem_unlink("sem_write");
+	sem_unlink("sem_replete");
 	free(table->philo);
 	free(table);
 }

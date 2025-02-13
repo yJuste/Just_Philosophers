@@ -16,6 +16,9 @@
 // -----------------------PROTOTYPE-------------------------
 long		ft_gettimeofday(void);
 void		ft_usleep(long ms);
+void		ft_usleep_max_meals(long ms, t_philo *philo,
+			int *max_meals, int *flg);
+void		ft_write(t_philo *philo, t_actions action);
 // ---------------------------------------------------------
 
 // Calcule le temps actuel en milliseconde.
@@ -39,20 +42,37 @@ void	ft_usleep(long ms)
 		usleep(50);
 }
 
-/*
+// Usleep seulement pour eat qui check pendant le repas si un philospher
+// a finit son quota de repas.
+void	ft_usleep_max_meals(long ms, t_philo *philo, int *max_meals, int *flg)
+{
+	long		start_time;
+
+	start_time = ft_gettimeofday();
+	while (ft_gettimeofday() - start_time < ms)
+	{
+		usleep(50);
+		if (*max_meals == philo->table->max_meals && *flg == 0)
+		{
+			ft_i_am_replete(philo);
+			*flg = 1;
+		}
+	}
+}
+
 // Écrit le statut du philosophe.
 void	ft_write(t_philo *philo, t_actions action)
 {
 	long		elapsed;
 
-	pthread_mutex_lock(&philo->table->write);
+	sem_wait(philo->table->sem_write);
 	elapsed = ft_gettimeofday() - philo->table->start_simulation;
 	if (!ft_check_death(philo))
 	{
 		if (action == LEFT_FORK)
-			printf("%ld %d has taken a fork\n", elapsed, philo->id);
+			printf("%ld %d has taken a left fork\n", elapsed, philo->id);
 		else if (action == RIGHT_FORK)
-			printf("%ld %d has taken a fork\n", elapsed, philo->id);
+			printf("%ld %d has taken a right fork\n", elapsed, philo->id);
 		else if (action == EAT)
 			printf("%ld %d is eating\n", elapsed, philo->id);
 		else if (action == SLEEP)
@@ -62,5 +82,5 @@ void	ft_write(t_philo *philo, t_actions action)
 		else if (action == DIE)
 			printf("%ld %d died\n", elapsed, philo->id);
 	}
-	pthread_mutex_unlock(&philo->table->write);
-}*/
+	sem_post(philo->table->sem_write);
+}
