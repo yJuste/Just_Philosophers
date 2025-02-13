@@ -25,13 +25,21 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <fcntl.h>
 
 // thread -- semaphore
 # include <pthread.h>
 # include <semaphore.h>
+# include <sys/wait.h>
 
 // gettimeofday
 # include <sys/time.h>
+
+// Semaphores utils
+
+# ifndef PERMS
+#  define PERMS 0600
+# endif
 
 // Structures
 

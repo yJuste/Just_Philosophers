@@ -24,14 +24,13 @@ int			ft_check_int_min(const char *s);
 // Fonction qui check la mort du philosophe.
 int	ft_check_death(t_philo *philo)
 {
-	sem_wait(philo->table->sem_info);
-	if (philo->table->end_simulation == 1)
-	{
-		sem_post(philo->table->sem_info);
-		return (1);
-	}
-	sem_post(philo->table->sem_info);
-	return (0);
+	sem_t		*die;
+
+	die = sem_open("sem_die", 0);
+	if (die == SEM_FAILED)
+		return (0);
+	sem_close(die);
+	return (1);
 }
 
 // Fonction qui check la dernière fois que le philosophe prend sont repas.

@@ -57,6 +57,7 @@ void	ft_end(t_table *table)
 	sem_unlink("sem_write");
 	sem_unlink("sem_replete");
 	sem_unlink("sem_time");
+	sem_unlink("sem_die");
 }
 
 void	ft_end_simulation(t_table *table)

@@ -28,13 +28,17 @@ void	*ft_monitor(void *data)
 	table = philo->table;
 	while (1)
 	{
+		sem_wait(table->sem_write);
+		if (ft_check_death(philo))
+			return (sem_post(table->sem_write), NULL);
 		if (ft_check_last_meal(philo))
 		{
 			ft_philo_died(table, philo->id);
 			return (NULL);
 		}
-		if (ft_check_replete(philo) == 1)
+		if (ft_check_replete(philo))
 			return (NULL);
+		sem_post(table->sem_write);
 	}
 	return (NULL);
 }
@@ -42,10 +46,8 @@ void	*ft_monitor(void *data)
 // Met fin à toute exécution et affiche le temps de sa mort.
 void	ft_philo_died(t_table *table, int id)
 {
-	sem_wait(table->sem_write);
-	sem_wait(table->sem_info);
-	table->end_simulation = 1;
-	sem_post(table->sem_info);
+	sem_unlink("sem_die");
+	sem_open("sem_die", O_CREAT, PERMS, 0);
 	printf("%ld %d died\n",
 		ft_gettimeofday() - table->start_simulation,
 		id);
