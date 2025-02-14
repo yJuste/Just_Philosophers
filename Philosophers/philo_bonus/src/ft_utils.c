@@ -19,6 +19,7 @@ void		ft_usleep(long ms);
 void		ft_usleep_max_meals(long ms, t_philo *philo,
 				int *max_meals, int *flg);
 void		ft_write(t_philo *philo, t_actions action);
+void		ft_i_am_replete(t_philo *philo);
 // ---------------------------------------------------------
 
 // Calcule le temps actuel en milliseconde.
@@ -70,9 +71,9 @@ void	ft_write(t_philo *philo, t_actions action)
 	if (!ft_check_death(philo))
 	{
 		if (action == LEFT_FORK)
-			printf("%ld %d has taken a left fork\n", elapsed, philo->id);
+			printf("%ld %d has taken a fork\n", elapsed, philo->id);
 		else if (action == RIGHT_FORK)
-			printf("%ld %d has taken a right fork\n", elapsed, philo->id);
+			printf("%ld %d has taken a fork\n", elapsed, philo->id);
 		else if (action == EAT)
 			printf("%ld %d is eating\n", elapsed, philo->id);
 		else if (action == SLEEP)
@@ -83,4 +84,12 @@ void	ft_write(t_philo *philo, t_actions action)
 			printf("%ld %d died\n", elapsed, philo->id);
 	}
 	sem_post(philo->table->sem_write);
+}
+
+// Indique si le philosophe a atteint sont quota. Il est alors repu.
+void	ft_i_am_replete(t_philo *philo)
+{
+	sem_wait(philo->table->sem_replete);
+	philo->table->full += 1;
+	sem_post(philo->table->sem_replete);
 }

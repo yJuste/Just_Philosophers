@@ -16,9 +16,10 @@
 // -----------------------------PROTOTYPE--------------------------------
 void		*ft_routine(void *data);
 int			ft_eat(t_philo *philo, int *max_meals, int *flg);
+int			ft_avoid_deadlock(t_philo *philo,
+				int *max_meals, int *flg);
 void		ft_sleep(t_philo *philo);
 void		ft_think(t_philo *philo);
-void		ft_i_am_replete(t_philo *philo);
 // ----------------------------------------------------------------------
 
 // Chaque philosophe vie sa routine, manger, dormir, penser.
@@ -49,6 +50,17 @@ void	*ft_routine(void *data)
 // Partie dans laquelle le philosophe doit manger.
 int	ft_eat(t_philo *philo, int *max_meals, int *flg)
 {
+	if (philo->last_meal == 0 && philo->id % 2 != 0)
+		ft_avoid_deadlock(philo, max_meals, flg);
+	else if (philo->last_meal != 0)
+		ft_avoid_deadlock(philo, max_meals, flg);
+	return (0);
+}
+
+// 1. Les impairs commencent à manger, ensuite ca reprend naturellement.
+// 2. Eviter les interblocages.
+int	ft_avoid_deadlock(t_philo *philo, int *max_meals, int *flg)
+{
 	sem_wait(philo->table->forks);
 	ft_write(philo, LEFT_FORK);
 	sem_wait(philo->table->forks);
@@ -75,12 +87,4 @@ void	ft_sleep(t_philo *philo)
 void	ft_think(t_philo *philo)
 {
 	ft_write(philo, THINK);
-}
-
-// Indique si le philosophe a atteint sont quota. Il est alors repu.
-void	ft_i_am_replete(t_philo *philo)
-{
-	sem_wait(philo->table->sem_replete);
-	philo->table->full += 1;
-	sem_post(philo->table->sem_replete);
 }
