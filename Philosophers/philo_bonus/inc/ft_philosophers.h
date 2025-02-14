@@ -128,7 +128,7 @@ void		ft_i_am_replete(t_philo *philo);
 
 // ft_check.c
 
-int			ft_check_death(t_philo *philo);
+int			ft_check_death(void);
 int			ft_check_last_meal(t_philo *philo);
 int			ft_check_replete(t_philo *philo);
 int			ft_check_atoi(const char *s, int sign);

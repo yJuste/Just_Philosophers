@@ -14,7 +14,7 @@
 #include "ft_philosophers.h"
 
 // -------------------------PROTOTYPE--------------------------
-int			ft_check_death(t_philo *philo);
+int			ft_check_death(void);
 int			ft_check_last_meal(t_philo *philo);
 int			ft_check_replete(t_philo *philo);
 int			ft_check_atoi(const char *s, int sign);
@@ -22,7 +22,7 @@ int			ft_check_int_min(const char *s);
 // ------------------------------------------------------------
 
 // Fonction qui check la mort du philosophe.
-int	ft_check_death(t_philo *philo)
+int	ft_check_death(void)
 {
 	sem_t		*die;
 

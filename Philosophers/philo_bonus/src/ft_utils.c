@@ -68,7 +68,7 @@ void	ft_write(t_philo *philo, t_actions action)
 
 	sem_wait(philo->table->sem_write);
 	elapsed = ft_gettimeofday() - philo->table->start_simulation;
-	if (!ft_check_death(philo))
+	if (!ft_check_death())
 	{
 		if (action == LEFT_FORK)
 			printf("%ld %d has taken a fork\n", elapsed, philo->id);

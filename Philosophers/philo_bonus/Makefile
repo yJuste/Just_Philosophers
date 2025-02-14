@@ -1,7 +1,7 @@
 NAME = philo_bonus
 
 CC = cc
-CFLAGS = -g # -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 IFLAGS = -I $(INC_DIR)
 
 SRC_DIR = src
