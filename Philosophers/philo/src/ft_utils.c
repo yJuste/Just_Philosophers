@@ -19,6 +19,7 @@ void		ft_usleep(long ms);
 void		ft_usleep_max_meals(long ms, t_philo *philo,
 				int *max_meals, int *flg);
 void		ft_write(t_philo *philo, t_actions action);
+void		ft_i_am_replete(t_philo *philo);
 // ---------------------------------------------------------
 
 // Calcule le temps actuel en milliseconde.
@@ -83,4 +84,12 @@ void	ft_write(t_philo *philo, t_actions action)
 			printf("%ld %d died\n", elapsed, philo->id);
 	}
 	pthread_mutex_unlock(&philo->table->write);
+}
+
+// Indique si le philosophe a atteint sont quota. Il est alors repu.
+void	ft_i_am_replete(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->table->replete);
+	philo->table->full += 1;
+	pthread_mutex_unlock(&philo->table->replete);
 }

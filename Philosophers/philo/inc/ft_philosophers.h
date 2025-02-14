@@ -107,9 +107,10 @@ void		ft_end_simulation(t_table *table);
 
 void		*ft_routine(void *data);
 int			ft_eat(t_philo *philo, int *max_meals, int *flg);
+int			ft_avoid_deadlock(t_philo *philo,
+				int *max_meals, int *flg);
 void		ft_sleep(t_philo *philo);
 void		ft_think(t_philo *philo);
-void		ft_i_am_replete(t_philo *philo);
 
 // ft_monitoring.c
 
@@ -131,6 +132,7 @@ void		ft_usleep(long ms);
 void		ft_usleep_max_meals(long ms, t_philo *philo,
 				int *max_meals, int *flg);
 void		ft_write(t_philo *philo, t_actions action);
+void		ft_i_am_replete(t_philo *philo);
 
 // ft_lib.c
 

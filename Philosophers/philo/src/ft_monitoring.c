@@ -41,6 +41,7 @@ void	*ft_monitor(void *data)
 		}
 		if (ft_check_replete(philo) == 1)
 			return (NULL);
+		usleep(50);
 	}
 	return (NULL);
 }

@@ -83,13 +83,9 @@ void	ft_init_philosophers(t_table *table)
 	{
 		philo = &table->philo[i];
 		philo->id = i + 1;
-		philo->last_meal = table->start_simulation;
-		philo->left_fork = &table->fork[(i + 1) % table->nb_philo];
-		philo->right_fork = &table->fork[i % table->nb_philo];
-		if (philo->id % 2 == 0)
-			philo->left_fork = &table->fork[i % table->nb_philo];
-		if (philo->id % 2 == 0)
-			philo->right_fork = &table->fork[(i + 1) % table->nb_philo];
+		philo->last_meal = 0;
+		philo->left_fork = &table->fork[i % table->nb_philo];
+		philo->right_fork = &table->fork[(i + 1) % table->nb_philo];
 		pthread_mutex_init(&philo->time, NULL);
 		philo->table = table;
 		i++;

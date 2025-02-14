@@ -16,9 +16,10 @@
 // -----------------------------PROTOTYPE--------------------------------
 void		*ft_routine(void *data);
 int			ft_eat(t_philo *philo, int *max_meals, int *flg);
+int			ft_avoid_deadlock(t_philo *philo,
+				int *max_meals, int *flg);
 void		ft_sleep(t_philo *philo);
 void		ft_think(t_philo *philo);
-void		ft_i_am_replete(t_philo *philo);
 // ----------------------------------------------------------------------
 
 // Chaque philosophe vie sa routine, manger, dormir, penser.
@@ -30,7 +31,7 @@ void	*ft_routine(void *data)
 	t_philo		*philo;
 
 	flg = 0;
-	max_meals = 0;
+	max_meals = 1;
 	philo = (t_philo *)data;
 	table = philo->table;
 	if (table->max_meals == 0)
@@ -49,17 +50,37 @@ void	*ft_routine(void *data)
 // Partie dans laquelle le philosophe doit manger.
 int	ft_eat(t_philo *philo, int *max_meals, int *flg)
 {
-	pthread_mutex_lock(&philo->left_fork->fork);
-	ft_write(philo, LEFT_FORK);
 	if (philo->table->nb_philo == 1)
 	{
+		pthread_mutex_lock(&philo->left_fork->fork);
+		ft_write(philo, LEFT_FORK);
 		ft_usleep(philo->table->time_to_die);
 		ft_write(philo, DIE);
 		pthread_mutex_unlock(&philo->left_fork->fork);
 		return (1);
 	}
-	pthread_mutex_lock(&philo->right_fork->fork);
-	ft_write(philo, RIGHT_FORK);
+	if (philo->id % 2 == 0)
+	{
+		pthread_mutex_lock(&philo->right_fork->fork);
+		ft_write(philo, RIGHT_FORK);
+		pthread_mutex_lock(&philo->left_fork->fork);
+		ft_write(philo, LEFT_FORK);
+	}
+	else
+	{
+		pthread_mutex_lock(&philo->left_fork->fork);
+		ft_write(philo, LEFT_FORK);
+		pthread_mutex_lock(&philo->right_fork->fork);
+		ft_write(philo, RIGHT_FORK);
+	}
+	ft_avoid_deadlock(philo, max_meals, flg);
+	return (0);
+}
+
+// 1. Les impairs commencent à manger, ensuite ca reprend naturellement.
+// 2. Eviter les interblocages.
+int	ft_avoid_deadlock(t_philo *philo, int *max_meals, int *flg)
+{
 	ft_write(philo, EAT);
 	pthread_mutex_lock(&philo->time);
 	philo->last_meal = ft_gettimeofday() - philo->table->start_simulation;
@@ -82,12 +103,4 @@ void	ft_sleep(t_philo *philo)
 void	ft_think(t_philo *philo)
 {
 	ft_write(philo, THINK);
-}
-
-// Indique si le philosophe a atteint sont quota. Il est alors repu.
-void	ft_i_am_replete(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->table->replete);
-	philo->table->full += 1;
-	pthread_mutex_unlock(&philo->table->replete);
 }
