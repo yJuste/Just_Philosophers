@@ -54,7 +54,9 @@ int	ft_check_replete(t_philo *philo)
 	pthread_mutex_lock(&philo->table->replete);
 	if (philo->table->full == philo->table->nb_philo)
 	{
+		pthread_mutex_lock(&philo->table->info);
 		philo->table->end_simulation = 1;
+		pthread_mutex_unlock(&philo->table->info);
 		pthread_mutex_unlock(&philo->table->replete);
 		return (1);
 	}
