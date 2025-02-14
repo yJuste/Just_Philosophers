@@ -50,10 +50,23 @@ void	*ft_routine(void *data)
 // Partie dans laquelle le philosophe doit manger.
 int	ft_eat(t_philo *philo, int *max_meals, int *flg)
 {
-	if (philo->last_meal == 0 && philo->id % 2 != 0)
+	if (philo->table->nb_philo == 1)
+	{
+		sem_wait(philo->table->forks);
+		ft_write(philo, LEFT_FORK);
+		ft_usleep(philo->table->time_to_die);
+		ft_write(philo, DIE);
+		sem_post(philo->table->forks);
+		return (1);
+	}
+	if (philo->last_meal == 0 && philo->id % 2 == 0)
 		ft_avoid_deadlock(philo, max_meals, flg);
-	else if (philo->last_meal != 0)
+	else
+	{
+		ft_usleep_max_meals(philo->table->time_to_eat / 2,
+			philo, max_meals, flg);
 		ft_avoid_deadlock(philo, max_meals, flg);
+	}
 	return (0);
 }
 

@@ -51,9 +51,8 @@ int	ft_check_last_meal(t_philo *philo)
 int	ft_check_replete(t_philo *philo)
 {
 	sem_wait(philo->table->sem_replete);
-	if (philo->table->full == philo->table->nb_philo)
+	if (philo->full == 1)
 	{
-		philo->table->end_simulation = 1;
 		sem_post(philo->table->sem_replete);
 		return (1);
 	}

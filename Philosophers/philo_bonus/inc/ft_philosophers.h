@@ -52,7 +52,6 @@ typedef struct s_table
 	int			time_to_die;
 	int			time_to_eat;
 	int			time_to_sleep;
-	int			full;
 	int			max_meals;
 	int			end_simulation;
 	long		start_simulation;
@@ -68,6 +67,7 @@ typedef struct s_philo
 {
 	int			id;
 	long		last_meal;
+	int			full;
 	pthread_t	monitor;
 	t_table		*table;
 }	t_philo;
@@ -106,6 +106,7 @@ void		ft_end_simulation(t_table *table);
 
 void		*ft_monitor(void *data);
 void		ft_philo_died(t_table *table, int id);
+void		ft_philo_replete(t_table *table);
 
 // ft_routine.c
 

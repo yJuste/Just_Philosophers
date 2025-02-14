@@ -90,6 +90,6 @@ void	ft_write(t_philo *philo, t_actions action)
 void	ft_i_am_replete(t_philo *philo)
 {
 	sem_wait(philo->table->sem_replete);
-	philo->table->full += 1;
+	philo->full += 1;
 	sem_post(philo->table->sem_replete);
 }

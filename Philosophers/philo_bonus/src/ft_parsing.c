@@ -83,6 +83,7 @@ void	ft_init_philosophers(t_table *table)
 		philo = &table->philo[i];
 		philo->id = i + 1;
 		philo->last_meal = 0;
+		philo->full = 0;
 		philo->monitor = 0;
 		philo->table = table;
 		i++;
