@@ -59,14 +59,19 @@ int	ft_eat(t_philo *philo, int *max_meals, int *flg)
 		sem_post(philo->table->forks);
 		return (1);
 	}
-	if (philo->last_meal == 0 && philo->id % 2 == 0)
-		ft_avoid_deadlock(philo, max_meals, flg);
-	else
+	if (philo->last_meal == 0)
 	{
-		ft_usleep_max_meals(philo->table->time_to_eat / 2,
-			philo, max_meals, flg);
-		ft_avoid_deadlock(philo, max_meals, flg);
+		if (philo->id % 2 == 0)
+			ft_avoid_deadlock(philo, max_meals, flg);
+		else
+		{
+			ft_usleep_max_meals(philo->table->time_to_eat / 2,
+				philo, max_meals, flg);
+			ft_avoid_deadlock(philo, max_meals, flg);
+		}
 	}
+	else
+		ft_avoid_deadlock(philo, max_meals, flg);
 	return (0);
 }
 

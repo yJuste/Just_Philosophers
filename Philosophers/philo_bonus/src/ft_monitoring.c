@@ -37,6 +37,7 @@ void	*ft_monitor(void *data)
 		if (ft_check_replete(philo))
 			return (ft_philo_replete(table), NULL);
 		sem_post(table->sem_write);
+		usleep(50);
 	}
 	return (NULL);
 }
