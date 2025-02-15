@@ -43,7 +43,6 @@ void	*ft_routine(void *data)
 			break ;
 		ft_sleep(philo);
 	}
-	ft_i_am_replete(philo);
 	return (NULL);
 }
 
@@ -55,7 +54,6 @@ int	ft_eat(t_philo *philo, int *max_meals, int *flg)
 		sem_wait(philo->table->forks);
 		ft_write(philo, LEFT_FORK);
 		ft_usleep(philo->table->time_to_die);
-		ft_write(philo, DIE);
 		sem_post(philo->table->forks);
 		return (1);
 	}
