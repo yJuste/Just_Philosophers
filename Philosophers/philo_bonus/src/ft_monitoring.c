@@ -45,24 +45,18 @@ void	*ft_monitor(void *data)
 // Met fin à toute exécution et affiche le temps de sa mort.
 void	ft_philo_died(t_table *table, int id)
 {
-	sem_t		*die;
-
-	sem_unlink("sem_die");
-	die = sem_open("sem_die", O_CREAT, PERMS, 0);
+	sem_close(table->sem_die);
 	printf("%ld %d died\n",
 		ft_gettimeofday() - table->start_simulation,
 		id);
-	sem_close(die);
+	sem_unlink("sem_die");
 	sem_post(table->sem_write);
 }
 
 // Met fin à toute exécution si tous les philos sont repus.
 void	ft_philo_replete(t_table *table)
 {
-	sem_t		*die;
-
+	sem_close(table->sem_die);
 	sem_unlink("sem_die");
-	die = sem_open("sem_die", O_CREAT, PERMS, 0);
-	sem_close(die);
 	sem_post(table->sem_write);
 }

@@ -28,9 +28,9 @@ int	ft_check_death(void)
 
 	die = sem_open("sem_die", 0);
 	if (die == SEM_FAILED)
-		return (0);
+		return (sem_close(die), 1);
 	sem_close(die);
-	return (1);
+	return (0);
 }
 
 // Fonction qui check la dernière fois que le philosophe prend sont repas.

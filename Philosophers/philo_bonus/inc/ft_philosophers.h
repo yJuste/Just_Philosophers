@@ -60,6 +60,7 @@ typedef struct s_table
 	sem_t		*sem_write;
 	sem_t		*sem_replete;
 	sem_t		*sem_time;
+	sem_t		*sem_die;
 	t_philo		*philo;
 }	t_table;
 

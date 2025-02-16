@@ -39,6 +39,7 @@ int	ft_init(t_table **table, char **argv)
 	(*table)->sem_write = sem_open("sem_write", O_CREAT, PERMS, 1);
 	(*table)->sem_replete = sem_open("sem_replete", O_CREAT, PERMS, 1);
 	(*table)->sem_time = sem_open("sem_time", O_CREAT, PERMS, 1);
+	(*table)->sem_die = sem_open("sem_die", O_CREAT, PERMS, 0);
 	ft_init_philosophers(*table);
 	(*table)->start_simulation = ft_gettimeofday();
 	return (0);
