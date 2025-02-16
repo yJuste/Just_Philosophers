@@ -28,7 +28,7 @@ int	ft_check_death(void)
 
 	die = sem_open("sem_die", 0);
 	if (die == SEM_FAILED)
-		return (sem_close(die), 1);
+		return (1);
 	sem_close(die);
 	return (0);
 }

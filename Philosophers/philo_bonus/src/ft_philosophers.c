@@ -67,6 +67,8 @@ void	ft_end_simulation(t_table *table)
 	sem_close(table->sem_write);
 	sem_close(table->sem_replete);
 	sem_close(table->sem_time);
+	if (table->sem_die)
+		sem_close(table->sem_die);
 	free(table->philo);
 	free(table);
 }

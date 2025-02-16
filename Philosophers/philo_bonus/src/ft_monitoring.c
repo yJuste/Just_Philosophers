@@ -50,6 +50,7 @@ void	ft_philo_died(t_table *table, int id)
 		ft_gettimeofday() - table->start_simulation,
 		id);
 	sem_unlink("sem_die");
+	table->sem_die = NULL;
 	sem_post(table->sem_write);
 }
 
@@ -58,5 +59,6 @@ void	ft_philo_replete(t_table *table)
 {
 	sem_close(table->sem_die);
 	sem_unlink("sem_die");
+	table->sem_die = NULL;
 	sem_post(table->sem_write);
 }
