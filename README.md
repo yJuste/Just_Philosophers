@@ -3,7 +3,7 @@
 ## // INTRO
 
 * Voici le Milestone 3, le projet : Philosophers
-* En cours.
+* Fini à 125%.
 
 ## /. HELP
 
@@ -53,4 +53,4 @@ void function2() {
 
 ##	/: EOF
 
-Modifié le 2 Janvier 2025 par Juste.
+Modifié le 27 Février 2025 par Juste.
